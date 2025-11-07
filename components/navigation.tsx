@@ -6,21 +6,36 @@ import { useEffect, useState } from "react"
 
 export function Navigation() {
   const [isDark, setIsDark] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const root = document.documentElement
+    setMounted(true)
+    const htmlElement = document.documentElement
+    setIsDark(htmlElement.classList.contains("dark"))
+  }, [])
+
+  const handleThemeToggle = () => {
+    const htmlElement = document.documentElement
     if (isDark) {
-      root.classList.add("dark")
+      htmlElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
+      setIsDark(false)
     } else {
-      root.classList.remove("dark")
+      htmlElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
+      setIsDark(true)
     }
-  }, [isDark])
+  }
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <nav className="border-b border-border/40">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <button
-          onClick={() => setIsDark(!isDark)}
+          onClick={handleThemeToggle}
           className="p-2 hover:bg-muted rounded-lg transition-colors"
           aria-label="Toggle theme"
         >
@@ -36,9 +51,6 @@ export function Navigation() {
           </Link>
           <Link href="/research" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
             Research
-          </Link>
-          <Link href="/work" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
-            Work
           </Link>
           <Link href="/hobbies" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
             Hobbies

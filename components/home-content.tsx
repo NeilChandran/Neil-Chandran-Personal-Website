@@ -7,14 +7,14 @@ import { Linkedin } from "lucide-react"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(false)
-  const [isLeadershipExpanded, setIsLeadershipExpanded] = useState(false)
+  const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
   return (
     <div className="space-y-8 pb-32">
       <h1 className="text-4xl md:text-5xl font-bold text-balance">Hi, I&apos;m Neil!</h1>
 
       <p className="text-lg leading-relaxed">
-        I currently am a student at{" "}
+        I&apos;m a student at{" "}
         <a
           href="https://www.stanford.edu/"
           target="_blank"
@@ -23,11 +23,11 @@ export function HomeContent() {
         >
           Stanford University
         </a>
-        , graduating in 2029.
+        .
       </p>
 
       <p className="text-lg leading-relaxed">
-        I am a Venture Scout at{" "}
+        Currently venture scouting for{" "}
         <a
           href="https://afore.vc/"
           target="_blank"
@@ -35,17 +35,61 @@ export function HomeContent() {
           className="text-[#4ade80] hover:underline font-semibold"
         >
           Afore Capital
-        </a>
-        , where I source and evaluate early-stage founders for their $500M pre-seed fund.
+        </a>{" "}
+        ($500M AUM - Feel free to reach out if you&apos;re building something cool).
       </p>
 
       <p className="text-lg leading-relaxed">
-        I created{" "}
-        <a href="#" className="text-[#4ade80] hover:underline font-semibold">
-          OutsideConnection
+        Also, creating prediction and market models @{" "}
+        <a
+          href="https://yougov.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          YouGov
         </a>
-        , a reentry employment platform connecting 10,000+ formerly incarcerated individuals with inclusive job
-        opportunities. Awarded Rise Global Winner and Prudential Emerging Visionary.
+        .
+      </p>
+
+      <p className="text-lg leading-relaxed">
+        I have done AI, government, policy, and tech research at{" "}
+        <a
+          href="https://www.stanford.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Stanford University
+        </a>
+        ,{" "}
+        <a
+          href="https://www.hoover.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Hoover Institution
+        </a>
+        ,{" "}
+        <a
+          href="https://hsph.harvard.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Harvard T.H. Chan School of Public Health
+        </a>
+        , and{" "}
+        <a
+          href="https://www.ucsc.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          UC Santa Cruz
+        </a>
+        .
       </p>
 
       <div className="pt-4">
@@ -60,8 +104,25 @@ export function HomeContent() {
         {isAwardsExpanded && (
           <div className="mt-6 pl-6">
             <p className="text-lg leading-relaxed text-foreground/90">
-              Coca-Cola Scholar, Prudential Emerging Visionaries Grand Winner, USACO Silver, Presidential Lifetime
-              Achievement Award, Rise Global Winner
+              <a
+                href="https://www.coca-colascholarsfoundation.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#4ade80] hover:underline font-semibold"
+              >
+                Coca-Cola Scholar
+              </a>
+              ,{" "}
+              <a
+                href="http://www.usaco.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#4ade80] hover:underline font-semibold"
+              >
+                USACO Gold
+              </a>
+              , U.S. President&apos;s Lifetime Achievement Award (White House Issued), MIT Solve Global Challenge
+              Finalist (1%), U.S. Presidential Scholar Semifinalist, Hershey&apos;s Grant Recipient
             </p>
           </div>
         )}
@@ -69,18 +130,17 @@ export function HomeContent() {
 
       <div className="pt-2">
         <button
-          onClick={() => setIsLeadershipExpanded(!isLeadershipExpanded)}
+          onClick={() => setIsFellowshipsExpanded(!isFellowshipsExpanded)}
           className="flex items-center gap-2 text-lg font-semibold hover:text-foreground/80 transition-colors"
         >
-          Leadership
-          {isLeadershipExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
+          Fellowships
+          {isFellowshipsExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
         </button>
 
-        {isLeadershipExpanded && (
+        {isFellowshipsExpanded && (
           <div className="mt-6 pl-6">
             <p className="text-lg leading-relaxed text-foreground/90">
-              UN Youth Leadership Council Policy Director (worked with US Congress, Senate, UN, & UNESCO to pass 10+
-              education bills), Youth Giving Project President (created 3,800+ STEM activity kits, raised $8,000+)
+              Hoover Student Fellow, Grata Private Equity Scholar
             </p>
           </div>
         )}
@@ -97,6 +157,42 @@ export function HomeContent() {
       <div className="pt-16">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">Supported By</h2>
         <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4 items-center justify-items-center">
+          <a
+            href="https://www.coca-colascholarsfoundation.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-20 flex items-center justify-center"
+          >
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-YOBp7lP3nwXjs09cp3TqJkEhQCbqlS.png"
+              alt="The Coca-Cola Company"
+              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
+            />
+          </a>
+          <a
+            href="https://www.thehersheycompany.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-20 flex items-center justify-center"
+          >
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-dWVsq8fFyk5praI7DnciEQMNfDc3Et.png"
+              alt="The Hershey Company"
+              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
+            />
+          </a>
+          <a
+            href="https://www.ed.gov/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-20 flex items-center justify-center"
+          >
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-11-07%20at%201.01.49%E2%80%AFAM-AunCkiykpK2PsQ5Y0bhHSIR3f84NZL.png"
+              alt="U.S. Department of Education"
+              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
+            />
+          </a>
           <a
             href="https://yougov.com/"
             target="_blank"
@@ -188,7 +284,7 @@ export function HomeContent() {
             className="w-full h-20 flex items-center justify-center"
           >
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download-5f31b78A2h9ZK3n3KCr1HBks1axJhT.png"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/digital_promise_logo-xJnLdNzasCNSNnSEraDZdcSFpYHJmC.jpg"
               alt="Digital Promise"
               className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
             />
@@ -214,7 +310,7 @@ export function HomeContent() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/download-O9xPPEuX44iQKMyUl8VR4dsA4pJHkP.jpg"
               alt="White House"
-              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply"
+              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
             />
           </a>
           <a
@@ -238,7 +334,7 @@ export function HomeContent() {
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rJu1A0SP_400x400-gEis1JvsEpaKRGGtuKl0gciVzsiZCm.jpg"
               alt="California State Treasurer's Office"
-              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply"
+              className="h-20 w-full object-contain grayscale hover:grayscale-0 transition-all duration-300"
             />
           </a>
         </div>
@@ -251,10 +347,6 @@ export function HomeContent() {
         <span className="text-foreground/50">•</span>
         <Link href="/research" className="text-[#6366f1] hover:underline">
           Research
-        </Link>
-        <span className="text-foreground/50">•</span>
-        <Link href="/work" className="text-[#6366f1] hover:underline">
-          Work
         </Link>
         <span className="text-foreground/50">•</span>
         <Link href="/hobbies" className="text-[#6366f1] hover:underline">
