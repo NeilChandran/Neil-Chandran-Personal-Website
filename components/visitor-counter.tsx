@@ -8,17 +8,11 @@ export function VisitorCounter() {
   useEffect(() => {
     async function fetchCount() {
       try {
-        // First, get the current count
-        const getRes = await fetch("/api/visitors")
-        const getData = await getRes.json()
-
-        // Check if we need to increment (API will check cookie)
-        const postRes = await fetch("/api/visitors", { method: "POST" })
-        const postData = await postRes.json()
-
-        setCount(postData.count)
+        const res = await fetch("/api/visitors")
+        const data = await res.json()
+        setCount(data.count)
       } catch (error) {
-        console.error("Failed to fetch visitor count:", error)
+        console.error("[v0] Failed to fetch visitor count:", error)
       }
     }
 
