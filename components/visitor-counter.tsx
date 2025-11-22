@@ -6,19 +6,23 @@ export function VisitorCounter() {
   const [count, setCount] = useState<number | null>(null)
 
   useEffect(() => {
-    // Get current count from localStorage
-    const currentCount = Number.parseInt(localStorage.getItem("visitorCount") || "0", 10)
-    const hasVisitedThisSession = sessionStorage.getItem("hasVisited")
+    async function fetchCount() {
+      try {
+        // First, get the current count
+        const getRes = await fetch("/api/visitors")
+        const getData = await getRes.json()
 
-    // Only increment if this is a new session
-    if (!hasVisitedThisSession) {
-      const newCount = currentCount + 1
-      localStorage.setItem("visitorCount", newCount.toString())
-      sessionStorage.setItem("hasVisited", "true")
-      setCount(newCount)
-    } else {
-      setCount(currentCount)
+        // Check if we need to increment (API will check cookie)
+        const postRes = await fetch("/api/visitors", { method: "POST" })
+        const postData = await postRes.json()
+
+        setCount(postData.count)
+      } catch (error) {
+        console.error("Failed to fetch visitor count:", error)
+      }
     }
+
+    fetchCount()
   }, [])
 
   if (count === null) return null
