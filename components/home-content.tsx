@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import Link from "next/link"
 import { Linkedin } from "lucide-react"
+import { TextScramble } from "./text-scramble"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(false)
@@ -11,10 +12,10 @@ export function HomeContent() {
 
   return (
     <div className="space-y-8 pb-32">
-      <h1 className="text-4xl md:text-5xl font-bold text-balance">Hi, I&apos;m Neil!</h1>
+      <TextScramble text="Hi, I'm Neil!" as="h1" className="text-4xl md:text-5xl font-bold text-balance" />
 
       <p className="text-lg leading-relaxed">
-        I&apos;m a student at{" "}
+        I'm a student at{" "}
         <a
           href="https://www.stanford.edu/"
           target="_blank"
@@ -36,7 +37,7 @@ export function HomeContent() {
         >
           Afore Capital
         </a>{" "}
-        ($500M AUM - Feel free to reach out if you&apos;re building something cool).
+        ($500M AUM - Feel free to reach out if you're building something cool).
       </p>
 
       <p className="text-lg leading-relaxed">
