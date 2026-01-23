@@ -5,7 +5,7 @@ import { Sun, Moon } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export function Navigation() {
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
