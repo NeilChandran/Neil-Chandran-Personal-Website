@@ -22,26 +22,31 @@ export function HomeContent() {
           rel="noopener noreferrer"
           className="text-[#4ade80] hover:underline font-semibold"
         >
-          Stanford University
+          Stanford
         </a>
         .
       </p>
 
       <p className="text-lg leading-relaxed">
-        Currently venture scouting for{" "}
+        Currently building{" "}
+        <span 
+          className="inline-block w-24 h-5 rounded bg-gradient-to-r from-gray-200/60 via-gray-300/40 to-gray-200/60 dark:from-gray-600/40 dark:via-gray-500/30 dark:to-gray-600/40 blur-[4px] align-middle" 
+          aria-hidden="true"
+        />{" "}
+        and helping with growth for{" "}
         <a
-          href="https://afore.vc/"
+          href="https://www.perplexity.ai/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#4ade80] hover:underline font-semibold"
         >
-          Afore Capital
-        </a>{" "}
-        ($500M AUM - Feel free to reach out if you're building something cool).
+          Perplexity
+        </a>
+        .
       </p>
 
       <p className="text-lg leading-relaxed">
-        Also, creating prediction and market models @{" "}
+        Also, creating prediction and market models at{" "}
         <a
           href="https://yougov.com/"
           target="_blank"
@@ -61,7 +66,7 @@ export function HomeContent() {
           rel="noopener noreferrer"
           className="text-[#4ade80] hover:underline font-semibold"
         >
-          Stanford University
+          Stanford
         </a>
         ,{" "}
         <a
@@ -91,6 +96,28 @@ export function HomeContent() {
           UC Santa Cruz
         </a>
         .
+      </p>
+
+      <p className="text-lg leading-relaxed">
+        Previously scouted for{" "}
+        <a
+          href="https://afore.vc/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Afore Capital
+        </a>{" "}
+        ($500M AUM), and worked with the{" "}
+        <a
+          href="https://www.un.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          United Nations
+        </a>{" "}
+        as a Youth Advisor.
       </p>
 
       <div className="pt-4">
