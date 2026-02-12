@@ -46,20 +46,7 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        This spring I will be studying quantitative trading and market models at{" "}
-        <a
-          href="https://www.janestreet.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Jane Street
-        </a>
-        .
-      </p>
-
-      <p className="text-lg leading-relaxed">
-        Previously interned at{" "}
+        Before, I was the youngest intern at{" "}
         <a
           href="https://yougov.com/"
           target="_blank"
@@ -92,15 +79,6 @@ export function HomeContent() {
       <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at{" "}
         <a
-          href="https://www.stanford.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Stanford
-        </a>
-        ,{" "}
-        <a
           href="https://www.hoover.org/"
           target="_blank"
           rel="noopener noreferrer"
@@ -117,7 +95,7 @@ export function HomeContent() {
         >
           Harvard T.H. Chan School of Public Health
         </a>
-        , and{" "}
+        ,{" "}
         <a
           href="https://www.ucsc.edu/"
           target="_blank"
@@ -125,6 +103,24 @@ export function HomeContent() {
           className="text-[#4ade80] hover:underline font-semibold"
         >
           UC Santa Cruz
+        </a>
+        , and{" "}
+        <a
+          href="https://fsi.stanford.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Stanford FSI
+        </a>{" "}
+        in partnership with{" "}
+        <a
+          href="https://about.meta.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Meta
         </a>
         .
       </p>
