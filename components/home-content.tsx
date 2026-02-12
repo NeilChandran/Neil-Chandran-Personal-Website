@@ -46,6 +46,50 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
+        This spring I will be studying quantitative trading and market models at{" "}
+        <a
+          href="https://www.janestreet.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Jane Street
+        </a>
+        .
+      </p>
+
+      <p className="text-lg leading-relaxed">
+        Previously interned at{" "}
+        <a
+          href="https://yougov.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          YouGov
+        </a>
+        , scouted for{" "}
+        <a
+          href="https://afore.vc/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Afore Capital
+        </a>{" "}
+        ($500M AUM), and worked with the{" "}
+        <a
+          href="https://www.un.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          United Nations
+        </a>{" "}
+        as a Youth Advisor.
+      </p>
+
+      <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at{" "}
         <a
           href="https://www.stanford.edu/"
@@ -83,37 +127,6 @@ export function HomeContent() {
           UC Santa Cruz
         </a>
         .
-      </p>
-
-      <p className="text-lg leading-relaxed">
-        Previously interned at{" "}
-        <a
-          href="https://yougov.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          YouGov
-        </a>
-        , scouted for{" "}
-        <a
-          href="https://afore.vc/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Afore Capital
-        </a>{" "}
-        ($500M AUM), and worked with the{" "}
-        <a
-          href="https://www.un.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          United Nations
-        </a>{" "}
-        as a Youth Advisor.
       </p>
 
       <div className="pt-4">
