@@ -46,7 +46,7 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        Also, creating prediction and market models at{" "}
+        Before, I was the youngest intern at{" "}
         <a
           href="https://yougov.com/"
           target="_blank"
@@ -55,51 +55,7 @@ export function HomeContent() {
         >
           YouGov
         </a>
-        .
-      </p>
-
-      <p className="text-lg leading-relaxed">
-        I have done AI, government, policy, and tech research at{" "}
-        <a
-          href="https://www.stanford.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Stanford
-        </a>
-        ,{" "}
-        <a
-          href="https://www.hoover.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Hoover Institution
-        </a>
-        ,{" "}
-        <a
-          href="https://hsph.harvard.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          Harvard T.H. Chan School of Public Health
-        </a>
-        , and{" "}
-        <a
-          href="https://www.ucsc.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          UC Santa Cruz
-        </a>
-        .
-      </p>
-
-      <p className="text-lg leading-relaxed">
-        Previously scouted for{" "}
+        , scouted for{" "}
         <a
           href="https://afore.vc/"
           target="_blank"
@@ -118,6 +74,55 @@ export function HomeContent() {
           United Nations
         </a>{" "}
         as a Youth Advisor.
+      </p>
+
+      <p className="text-lg leading-relaxed">
+        I have done AI, government, policy, and tech research at{" "}
+        <a
+          href="https://www.hoover.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Hoover Institution
+        </a>
+        ,{" "}
+        <a
+          href="https://hsph.harvard.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Harvard T.H. Chan School of Public Health
+        </a>
+        ,{" "}
+        <a
+          href="https://www.ucsc.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          UC Santa Cruz
+        </a>
+        , and{" "}
+        <a
+          href="https://fsi.stanford.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Stanford FSI
+        </a>{" "}
+        in partnership with{" "}
+        <a
+          href="https://about.meta.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Meta
+        </a>
+        .
       </p>
 
       <div className="pt-4">
