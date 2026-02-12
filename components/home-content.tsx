@@ -46,19 +46,6 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        Also, creating prediction and market models at{" "}
-        <a
-          href="https://yougov.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
-        >
-          YouGov
-        </a>
-        .
-      </p>
-
-      <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at{" "}
         <a
           href="https://www.stanford.edu/"
@@ -99,7 +86,16 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        Previously scouted for{" "}
+        Previously interned at{" "}
+        <a
+          href="https://yougov.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          YouGov
+        </a>
+        , scouted for{" "}
         <a
           href="https://afore.vc/"
           target="_blank"
