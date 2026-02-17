@@ -20,7 +20,7 @@ export function HomeContent() {
           href="https://www.stanford.edu/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#8C1515] hover:underline font-semibold"
         >
           Stanford
         </a>
@@ -38,7 +38,7 @@ export function HomeContent() {
           href="https://www.perplexity.ai/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#20808D] hover:underline font-semibold"
         >
           Perplexity
         </a>
@@ -47,7 +47,7 @@ export function HomeContent() {
           href="https://www.janestreet.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#1A4D2E] dark:text-[#3CB371] hover:underline font-semibold"
         >
           Jane Street
         </a>{" "}
@@ -60,7 +60,7 @@ export function HomeContent() {
           href="https://yougov.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#3D5A99] hover:underline font-semibold"
         >
           YouGov
         </a>
@@ -69,7 +69,7 @@ export function HomeContent() {
           href="https://afore.vc/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#000000] dark:text-[#CCCCCC] hover:underline font-semibold"
         >
           Afore Capital
         </a>{" "}
@@ -78,7 +78,7 @@ export function HomeContent() {
           href="https://www.un.org/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#009EDB] hover:underline font-semibold"
         >
           United Nations
         </a>{" "}
@@ -91,7 +91,7 @@ export function HomeContent() {
           href="https://www.hoover.org/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#8C1515] hover:underline font-semibold"
         >
           Hoover Institution
         </a>
@@ -100,7 +100,7 @@ export function HomeContent() {
           href="https://hsph.harvard.edu/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#A51C30] hover:underline font-semibold"
         >
           Harvard T.H. Chan School of Public Health
         </a>
@@ -109,7 +109,7 @@ export function HomeContent() {
           href="https://www.ucsc.edu/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#003C6C] dark:text-[#F1B521] hover:underline font-semibold"
         >
           UC Santa Cruz
         </a>
@@ -118,7 +118,7 @@ export function HomeContent() {
           href="https://fsi.stanford.edu/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#8C1515] hover:underline font-semibold"
         >
           Stanford FSI
         </a>{" "}
@@ -127,7 +127,7 @@ export function HomeContent() {
           href="https://about.meta.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#4ade80] hover:underline font-semibold"
+          className="text-[#0081FB] hover:underline font-semibold"
         >
           Meta
         </a>
@@ -150,7 +150,7 @@ export function HomeContent() {
                 href="https://www.coca-colascholarsfoundation.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#4ade80] hover:underline font-semibold"
+                className="text-[#F40009] hover:underline font-semibold"
               >
                 Coca-Cola Scholar
               </a>
@@ -168,7 +168,7 @@ export function HomeContent() {
                 href="http://www.usaco.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#4ade80] hover:underline font-semibold"
+                className="text-[#DAA520] hover:underline font-semibold"
               >
                 USACO Gold
               </a>
