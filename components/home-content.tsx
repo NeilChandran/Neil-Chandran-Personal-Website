@@ -10,18 +10,15 @@ export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
+  const linkClass = "text-[#2563EB] dark:text-[#60A5FA] hover:underline font-semibold"
+
   return (
     <div className="space-y-8 pb-32">
       <TextScramble text="Hi, I'm Neil!" as="h1" className="text-4xl md:text-5xl font-bold text-balance" />
 
       <p className="text-lg leading-relaxed">
         I'm a student at{" "}
-        <a
-          href="https://www.stanford.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#8C1515] hover:underline font-semibold"
-        >
+        <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Stanford
         </a>
         .
@@ -29,26 +26,16 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         Currently building{" "}
-        <span 
-          className="inline-block w-24 h-5 rounded bg-gradient-to-r from-gray-200/60 via-gray-300/40 to-gray-200/60 dark:from-gray-600/40 dark:via-gray-500/30 dark:to-gray-600/40 blur-[4px] align-middle" 
+        <span
+          className="inline-block w-24 h-5 rounded bg-gradient-to-r from-gray-200/60 via-gray-300/40 to-gray-200/60 dark:from-gray-600/40 dark:via-gray-500/30 dark:to-gray-600/40 blur-[4px] align-middle"
           aria-hidden="true"
         />{" "}
         and helping with growth for{" "}
-        <a
-          href="https://www.perplexity.ai/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#20808D] hover:underline font-semibold"
-        >
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Perplexity
         </a>
         . This spring, I'll be at{" "}
-        <a
-          href="https://www.janestreet.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#1A4D2E] dark:text-[#3CB371] hover:underline font-semibold"
-        >
+        <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Jane Street
         </a>{" "}
         working on trading and technology.
@@ -56,30 +43,15 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         Before, I was the youngest intern at{" "}
-        <a
-          href="https://yougov.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#3D5A99] hover:underline font-semibold"
-        >
+        <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           YouGov
         </a>
         , scouted for{" "}
-        <a
-          href="https://afore.vc/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#000000] dark:text-[#CCCCCC] hover:underline font-semibold"
-        >
+        <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Afore Capital
         </a>{" "}
         ($500M AUM), and worked with the{" "}
-        <a
-          href="https://www.un.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#009EDB] hover:underline font-semibold"
-        >
+        <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           United Nations
         </a>{" "}
         as a Youth Advisor.
@@ -87,48 +59,23 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at{" "}
-        <a
-          href="https://www.hoover.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#8C1515] hover:underline font-semibold"
-        >
+        <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Hoover Institution
         </a>
         ,{" "}
-        <a
-          href="https://hsph.harvard.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#A51C30] hover:underline font-semibold"
-        >
+        <a href="https://hsph.harvard.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Harvard T.H. Chan School of Public Health
         </a>
         ,{" "}
-        <a
-          href="https://www.ucsc.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#003C6C] dark:text-[#F1B521] hover:underline font-semibold"
-        >
+        <a href="https://www.ucsc.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           UC Santa Cruz
         </a>
         , and{" "}
-        <a
-          href="https://fsi.stanford.edu/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#8C1515] hover:underline font-semibold"
-        >
+        <a href="https://fsi.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Stanford FSI
         </a>{" "}
         in partnership with{" "}
-        <a
-          href="https://about.meta.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[#0081FB] hover:underline font-semibold"
-        >
+        <a href="https://about.meta.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Meta
         </a>
         .
@@ -150,26 +97,16 @@ export function HomeContent() {
                 href="https://www.coca-colascholarsfoundation.org/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#F40009] hover:underline font-semibold"
+                className={linkClass}
               >
                 Coca-Cola Scholar
               </a>
               ,{" "}
-              <a
-                href="https://treehacks.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#4ade80] hover:underline font-semibold"
-              >
+              <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 TreeHacks Winner: Sustainability Track
               </a>
               ,{" "}
-              <a
-                href="http://www.usaco.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#DAA520] hover:underline font-semibold"
-              >
+              <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 USACO Gold
               </a>
               , U.S. President&apos;s Lifetime Achievement Award (White House Issued), MIT Solve Global Challenge
@@ -199,22 +136,22 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed pt-4">
         Reach out:{" "}
-        <a href="mailto:neilchandran@stanford.edu" className="text-[#6366f1] hover:underline">
+        <a href="mailto:neilchandran@stanford.edu" className={linkClass}>
           neilchandran@stanford.edu
         </a>
         .
       </p>
 
       <div className="flex items-center gap-3 text-lg pt-8">
-        <Link href="/projects" className="text-[#6366f1] hover:underline">
+        <Link href="/projects" className={linkClass}>
           Projects
         </Link>
         <span className="text-foreground/50">•</span>
-        <Link href="/research" className="text-[#6366f1] hover:underline">
+        <Link href="/research" className={linkClass}>
           Research
         </Link>
         <span className="text-foreground/50">•</span>
-        <Link href="/hobbies" className="text-[#6366f1] hover:underline">
+        <Link href="/hobbies" className={linkClass}>
           Hobbies
         </Link>
       </div>
