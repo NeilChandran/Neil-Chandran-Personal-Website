@@ -7,7 +7,7 @@ import { Linkedin } from "lucide-react"
 import { TextScramble } from "./text-scramble"
 
 export function HomeContent() {
-  const [isAwardsExpanded, setIsAwardsExpanded] = useState(false)
+  const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
   return (
@@ -42,7 +42,16 @@ export function HomeContent() {
         >
           Perplexity
         </a>
-        .
+        . This spring, I'll be at{" "}
+        <a
+          href="https://www.janestreet.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline font-semibold"
+        >
+          Jane Street
+        </a>{" "}
+        working on trading and technology.
       </p>
 
       <p className="text-lg leading-relaxed">
@@ -144,6 +153,15 @@ export function HomeContent() {
                 className="text-[#4ade80] hover:underline font-semibold"
               >
                 Coca-Cola Scholar
+              </a>
+              ,{" "}
+              <a
+                href="https://treehacks.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#4ade80] hover:underline font-semibold"
+              >
+                TreeHacks Winner: Sustainability Track
               </a>
               ,{" "}
               <a
