@@ -34,11 +34,7 @@ export function HomeContent() {
         <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Perplexity
         </a>
-        . This spring, I'll be at{" "}
-        <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
-          Jane Street
-        </a>{" "}
-        working on trading and technology.
+        .
       </p>
 
       <p className="text-lg leading-relaxed">
