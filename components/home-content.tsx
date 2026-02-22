@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronUp, ChevronDown } from "lucide-react"
+import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
-import { Linkedin } from "lucide-react"
 import { TextScramble } from "./text-scramble"
 
 export function HomeContent() {
@@ -172,6 +171,15 @@ export function HomeContent() {
           aria-label="LinkedIn"
         >
           <Linkedin className="w-6 h-6" />
+        </a>
+        <a
+          href="https://github.com/NeilChandran"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-foreground/70 hover:text-foreground transition-colors"
+          aria-label="GitHub"
+        >
+          <Github className="w-6 h-6" />
         </a>
       </div>
     </div>
