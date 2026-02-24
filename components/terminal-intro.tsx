@@ -3,61 +3,57 @@
 import { useState, useCallback, useEffect, useRef } from "react"
 
 /**
- * Video-game engine boot screen.
+ * Video-game LEGO-build intro.
  *
- * The "NC" logo exists at all times as a single, smooth shape.
- * A grid of opaque blocks covers it. On interaction the blocks
- * retract outward in a fast, mechanical wave to reveal the logo.
- * Once all blocks are gone they vanish instantly. A loading bar
- * fills, then the screen transitions to the main site.
+ * The "NC" logo is assembled from a small number of large pieces
+ * that slide mechanically into place. Once locked, the pieces fuse
+ * into a seamless logo. A loading bar fills, then fade to site.
+ *
+ * N pieces: left vertical stroke, diagonal stroke, right vertical stroke
+ * C pieces: top horizontal bar, vertical spine, bottom horizontal bar
  */
 
-// Block grid dimensions
-const COLS = 24
-const ROWS = 14
-const BLOCK_SIZE = 48
-const GAP = 2
-
-type BlockData = {
-  row: number
-  col: number
-  // exit direction: which edge to fly toward
-  dx: number
-  dy: number
+type Piece = {
+  id: string
+  letter: "N" | "C"
+  // Final position (percentage-based offsets from logo center)
+  x: number
+  y: number
+  w: number
+  h: number
+  // Start offset before animation
+  startX: number
+  startY: number
   delay: number
+  color: string
 }
 
-function buildBlocks(): BlockData[] {
-  const cx = COLS / 2
-  const cy = ROWS / 2
-  const blocks: BlockData[] = []
+// N is built from 3 pieces, C from 3 pieces = 6 total large pieces
+// Coordinates are in px, relative to a virtual 300x200 canvas centered on screen
+const PIECES: Piece[] = [
+  // === N (white) ===
+  // Left vertical bar
+  { id: "n-left", letter: "N", x: 0, y: 0, w: 38, h: 160, startX: -400, startY: 0, delay: 0, color: "#e5e5e5" },
+  // Right vertical bar
+  { id: "n-right", letter: "N", x: 95, y: 0, w: 38, h: 160, startX: 400, startY: 0, delay: 80, color: "#e5e5e5" },
+  // Diagonal connector
+  { id: "n-diag", letter: "N", x: 18, y: 0, w: 97, h: 160, startX: 0, startY: -350, delay: 160, color: "#e5e5e5" },
 
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      // Distance from center determines stagger delay (center reveals first)
-      const dist = Math.sqrt((c - cx) ** 2 + (r - cy) ** 2)
-      const maxDist = Math.sqrt(cx ** 2 + cy ** 2)
-      const delay = (dist / maxDist) * 300
-
-      // Direction: fly away from center
-      const angle = Math.atan2(r - cy, c - cx)
-      const dx = Math.cos(angle)
-      const dy = Math.sin(angle)
-
-      blocks.push({ row: r, col: c, dx, dy, delay })
-    }
-  }
-  return blocks
-}
+  // === C (cyan) ===
+  // Vertical spine (left side of C)
+  { id: "c-spine", letter: "C", x: 152, y: 18, w: 32, h: 124, startX: 0, startY: 350, delay: 100, color: "#22d3ee" },
+  // Top horizontal bar
+  { id: "c-top", letter: "C", x: 152, y: 0, w: 100, h: 32, startX: 400, startY: -200, delay: 200, color: "#22d3ee" },
+  // Bottom horizontal bar
+  { id: "c-bottom", letter: "C", x: 152, y: 128, w: 100, h: 32, startX: 400, startY: 200, delay: 280, color: "#22d3ee" },
+]
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<"idle" | "revealing" | "revealed" | "loading" | "done">("idle")
+  const [phase, setPhase] = useState<"idle" | "building" | "fused" | "loading" | "done">("idle")
   const [loadProgress, setLoadProgress] = useState(0)
   const [showHint, setShowHint] = useState(false)
   const triggered = useRef(false)
-  const blocksRef = useRef<BlockData[]>(buildBlocks())
 
-  // Show hint after brief delay
   useEffect(() => {
     const t = setTimeout(() => setShowHint(true), 400)
     return () => clearTimeout(t)
@@ -71,11 +67,10 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
     const tick = () => {
       const p = Math.min((Date.now() - start) / duration, 1)
       setLoadProgress(p)
-      if (p < 1) {
-        requestAnimationFrame(tick)
-      } else {
+      if (p < 1) requestAnimationFrame(tick)
+      else {
         setPhase("done")
-        setTimeout(onComplete, 350)
+        setTimeout(onComplete, 300)
       }
     }
     requestAnimationFrame(tick)
@@ -84,11 +79,10 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
   const handleTrigger = useCallback(() => {
     if (triggered.current) return
     triggered.current = true
-    setPhase("revealing")
-    // Blocks are done retracting after stagger + transition
-    setTimeout(() => setPhase("revealed"), 650)
-    // Start loading bar
-    setTimeout(() => setPhase("loading"), 900)
+    setPhase("building")
+    // After all pieces land (last delay 280 + transition 400)
+    setTimeout(() => setPhase("fused"), 750)
+    setTimeout(() => setPhase("loading"), 950)
   }, [])
 
   useEffect(() => {
@@ -101,17 +95,14 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
     (e: React.MouseEvent) => {
       e.stopPropagation()
       setPhase("done")
-      setTimeout(onComplete, 150)
+      setTimeout(onComplete, 100)
     },
     [onComplete],
   )
 
-  const isRevealing = phase === "revealing"
-  const blocksGone = phase === "revealed" || phase === "loading" || phase === "done"
+  const isBuilding = phase === "building"
+  const isFused = phase === "fused" || phase === "loading" || phase === "done"
   const isDone = phase === "done"
-
-  const gridW = COLS * (BLOCK_SIZE + GAP)
-  const gridH = ROWS * (BLOCK_SIZE + GAP)
 
   return (
     <div
@@ -133,75 +124,73 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
         Skip
       </button>
 
-      {/* Logo layer - always present, constant size */}
-      <div className="absolute flex items-end" style={{ gap: "2px" }}>
-        <span
-          style={{
-            fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-            fontSize: "clamp(80px, 12vw, 140px)",
-            fontWeight: 900,
-            lineHeight: 1,
-            color: "#e5e5e5",
-            letterSpacing: "-0.04em",
-          }}
-        >
-          N
-        </span>
-        <span
-          style={{
-            fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-            fontSize: "clamp(58px, 8.5vw, 100px)",
-            fontWeight: 900,
-            lineHeight: 1,
-            color: "#22d3ee",
-            letterSpacing: "-0.04em",
-            marginLeft: "-0.08em",
-            marginBottom: "2px",
-            transform: "rotate(-3deg)",
-            transformOrigin: "bottom left",
-          }}
-        >
-          C
-        </span>
-      </div>
+      {/* Logo build area */}
+      <div
+        className="relative"
+        style={{ width: 260, height: 160 }}
+      >
+        {/* When fused, show clean text logo on top of pieces */}
+        {isFused && (
+          <div className="absolute inset-0 flex items-end" style={{ gap: 0 }}>
+            <span
+              style={{
+                fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+                fontSize: 140,
+                fontWeight: 900,
+                lineHeight: 0.88,
+                color: "#e5e5e5",
+                letterSpacing: "-0.04em",
+              }}
+            >
+              N
+            </span>
+            <span
+              style={{
+                fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+                fontSize: 100,
+                fontWeight: 900,
+                lineHeight: 0.88,
+                color: "#22d3ee",
+                letterSpacing: "-0.04em",
+                marginLeft: -8,
+                marginBottom: 1,
+                transform: "rotate(-3deg)",
+                transformOrigin: "bottom left",
+              }}
+            >
+              C
+            </span>
+          </div>
+        )}
 
-      {/* Block mask layer - covers the logo, retracts on trigger */}
-      {!blocksGone && (
-        <div
-          className="absolute z-10"
-          style={{
-            width: gridW,
-            height: gridH,
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          {blocksRef.current.map((block, i) => {
-            const flyDist = 1200
-            const tx = isRevealing ? block.dx * flyDist : 0
-            const ty = isRevealing ? block.dy * flyDist : 0
+        {/* Pieces layer - visible during idle and building, hidden once fused */}
+        {!isFused &&
+          PIECES.map((piece) => {
+            const landed = isBuilding
+            const tx = landed ? 0 : piece.startX
+            const ty = landed ? 0 : piece.startY
 
             return (
               <div
-                key={i}
+                key={piece.id}
                 className="absolute"
                 style={{
-                  width: BLOCK_SIZE,
-                  height: BLOCK_SIZE,
-                  left: block.col * (BLOCK_SIZE + GAP),
-                  top: block.row * (BLOCK_SIZE + GAP),
-                  background: "#0a0a0a",
+                  width: piece.w,
+                  height: piece.h,
+                  left: piece.x,
+                  top: piece.y,
+                  background: piece.color,
+                  borderRadius: 2,
                   transform: `translate(${tx}px, ${ty}px)`,
-                  transition: isRevealing
-                    ? `transform 350ms cubic-bezier(0.22, 1, 0.36, 1) ${block.delay}ms`
+                  opacity: landed || phase === "idle" ? 1 : 1,
+                  transition: landed
+                    ? `transform 380ms cubic-bezier(0.22, 1, 0.36, 1) ${piece.delay}ms`
                     : "none",
                 }}
               />
             )
           })}
-        </div>
-      )}
+      </div>
 
       {/* Bottom: hint or loading bar */}
       <div className="absolute bottom-14 flex flex-col items-center gap-3 z-20" style={{ minHeight: 36 }}>
@@ -217,16 +206,14 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
                 }}
               />
             </div>
-            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">
-              Loading
-            </span>
+            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">Loading</span>
           </>
         ) : phase === "idle" ? (
           <span
             className="text-[9px] font-mono tracking-[0.3em] uppercase transition-opacity duration-500 z-20"
             style={{ color: "rgba(255,255,255,0.15)", opacity: showHint ? 1 : 0 }}
           >
-            Press any key
+            Click to build
           </span>
         ) : null}
       </div>
