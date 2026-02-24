@@ -201,10 +201,10 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
               Identity Verified -- Clearance Level 5
             </p>
             <h1
-              className="font-mono text-green-400 text-4xl md:text-5xl font-bold tracking-wider"
+              className="font-mono text-green-400 text-5xl md:text-7xl font-bold tracking-widest"
               style={{ textShadow: "0 0 20px rgba(74,222,128,0.5), 0 0 40px rgba(74,222,128,0.2)" }}
             >
-              WELCOME, NEIL
+              WELCOME
             </h1>
             <div
               className="w-48 h-px mx-auto bg-green-500/40 mt-6"
