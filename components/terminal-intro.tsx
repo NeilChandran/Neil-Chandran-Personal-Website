@@ -1,214 +1,122 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-
-const USERNAME = "neilchandran"
-const PASSWORD_MASK = "*********"
-const CHAR_DELAY = 90
-const AUTH_DELAY = 1200
-const GRANTED_DELAY = 800
-
-type Phase =
-  | "username-label"
-  | "username-typing"
-  | "password-label"
-  | "password-typing"
-  | "authenticating"
-  | "granted"
-  | "exit"
+import { useState, useCallback, useEffect } from "react"
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<Phase>("username-label")
-  const [typedUsername, setTypedUsername] = useState("")
-  const [typedPassword, setTypedPassword] = useState("")
-  const [showCursor, setShowCursor] = useState(true)
-  const [exiting, setExiting] = useState(false)
+  const [split, setSplit] = useState(false)
+  const [fadeOut, setFadeOut] = useState(false)
+  const [showHint, setShowHint] = useState(false)
 
-  // Blinking cursor
   useEffect(() => {
-    const interval = setInterval(() => setShowCursor((v) => !v), 530)
-    return () => clearInterval(interval)
+    const t = setTimeout(() => setShowHint(true), 1200)
+    return () => clearTimeout(t)
   }, [])
 
-  // Phase: show username label then start typing
-  useEffect(() => {
-    if (phase === "username-label") {
-      const t = setTimeout(() => setPhase("username-typing"), 400)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
+  const handleClick = useCallback(() => {
+    if (split) return
+    setSplit(true)
+    setTimeout(() => setFadeOut(true), 400)
+    setTimeout(onComplete, 900)
+  }, [split, onComplete])
 
-  // Type username
-  useEffect(() => {
-    if (phase !== "username-typing") return
-    if (typedUsername.length < USERNAME.length) {
-      const t = setTimeout(() => {
-        setTypedUsername(USERNAME.slice(0, typedUsername.length + 1))
-      }, CHAR_DELAY)
-      return () => clearTimeout(t)
-    }
-    const t = setTimeout(() => setPhase("password-label"), 300)
-    return () => clearTimeout(t)
-  }, [phase, typedUsername])
-
-  // Phase: show password label then start typing
-  useEffect(() => {
-    if (phase === "password-label") {
-      const t = setTimeout(() => setPhase("password-typing"), 400)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Type password
-  useEffect(() => {
-    if (phase !== "password-typing") return
-    if (typedPassword.length < PASSWORD_MASK.length) {
-      const t = setTimeout(() => {
-        setTypedPassword(PASSWORD_MASK.slice(0, typedPassword.length + 1))
-      }, CHAR_DELAY)
-      return () => clearTimeout(t)
-    }
-    const t = setTimeout(() => setPhase("authenticating"), 300)
-    return () => clearTimeout(t)
-  }, [phase, typedPassword])
-
-  // Authenticating phase
-  useEffect(() => {
-    if (phase === "authenticating") {
-      const t = setTimeout(() => setPhase("granted"), AUTH_DELAY)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Granted phase -> exit
-  useEffect(() => {
-    if (phase === "granted") {
-      const t = setTimeout(() => setPhase("exit"), GRANTED_DELAY)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Exit animation
-  useEffect(() => {
-    if (phase === "exit") {
-      setExiting(true)
-      const t = setTimeout(onComplete, 600)
-      return () => clearTimeout(t)
-    }
-  }, [phase, onComplete])
-
-  const handleSkip = useCallback(() => {
-    setExiting(true)
-    setTimeout(onComplete, 300)
-  }, [onComplete])
-
-  const cursor = showCursor ? "\u2588" : "\u00A0"
-
-  const showUsernameLabel = phase !== "username-label" || true
-  const showPasswordLine =
-    phase === "password-label" ||
-    phase === "password-typing" ||
-    phase === "authenticating" ||
-    phase === "granted" ||
-    phase === "exit"
-  const showAuth = phase === "authenticating" || phase === "granted" || phase === "exit"
-  const showGranted = phase === "granted" || phase === "exit"
-
-  // Determine where cursor goes
-  const cursorOnUsername = phase === "username-label" || phase === "username-typing"
-  const cursorOnPassword = phase === "password-label" || phase === "password-typing"
+  const handleSkip = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setFadeOut(true)
+      setTimeout(onComplete, 300)
+    },
+    [onComplete],
+  )
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-500 ${
-        exiting ? "opacity-0" : "opacity-100"
+      onClick={handleClick}
+      className={`fixed inset-0 z-50 bg-black flex items-center justify-center cursor-pointer select-none transition-opacity duration-500 ${
+        fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
-      {/* Scanline overlay */}
+      {/* Subtle spotlight */}
       <div
-        className="pointer-events-none fixed inset-0 z-10"
+        className="pointer-events-none fixed inset-0"
         style={{
           background:
-            "repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 1px, transparent 1px, transparent 3px)",
+            "radial-gradient(ellipse at 50% 60%, rgba(255,255,255,0.06) 0%, transparent 60%)",
         }}
       />
 
-      {/* Vignette */}
+      {/* Floor reflection gradient */}
       <div
-        className="pointer-events-none fixed inset-0 z-10"
+        className="pointer-events-none fixed inset-0"
         style={{
-          background: "radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%)",
+          background:
+            "linear-gradient(to bottom, transparent 55%, rgba(255,255,255,0.02) 70%, transparent 90%)",
         }}
       />
 
       {/* Skip button */}
       <button
         onClick={handleSkip}
-        className="fixed top-6 right-6 z-20 font-mono text-sm text-green-500/60 hover:text-green-400 transition-colors border border-green-500/30 hover:border-green-400/50 px-3 py-1.5 rounded"
+        className="fixed top-6 right-6 z-20 text-sm text-white/30 hover:text-white/60 transition-colors px-3 py-1.5 rounded font-sans"
       >
-        SKIP
+        Skip
       </button>
 
-      {/* Terminal */}
-      <div className="relative z-20 w-full max-w-lg px-8">
-        {/* System header */}
-        <div className="font-mono text-green-500/50 text-xs mb-6 tracking-widest">
-          {">"} CHANDRAN SYSTEMS v2.029 -- SECURE TERMINAL
+      {/* NC Letters */}
+      <div className="relative z-10 flex items-center justify-center">
+        {/* N */}
+        <div
+          className="transition-all ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={{
+            transitionDuration: split ? "700ms" : "0ms",
+            transform: split ? "translateX(-120vw) rotate(-15deg)" : "translateX(0)",
+            opacity: split ? 0 : 1,
+          }}
+        >
+          <span
+            className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-black leading-none tracking-tighter"
+            style={{
+              color: "#E8A830",
+              textShadow:
+                "4px 4px 0 rgba(0,0,0,0.4), 0 0 40px rgba(232,168,48,0.15)",
+              WebkitTextStroke: "1px rgba(0,0,0,0.1)",
+            }}
+          >
+            N
+          </span>
         </div>
 
-        <div className="font-mono text-green-400 text-base space-y-3 leading-relaxed" style={{ textShadow: "0 0 8px rgba(74,222,128,0.4)" }}>
-          {/* Username line */}
-          {showUsernameLabel && (
-            <div className="flex">
-              <span className="text-green-500/70 mr-2">USERNAME:</span>
-              <span>
-                {typedUsername}
-                {cursorOnUsername && <span className="text-green-400">{cursor}</span>}
-              </span>
-            </div>
-          )}
-
-          {/* Password line */}
-          {showPasswordLine && (
-            <div className="flex">
-              <span className="text-green-500/70 mr-2">PASSWORD:</span>
-              <span className="tracking-wider">
-                {typedPassword}
-                {cursorOnPassword && <span className="text-green-400">{cursor}</span>}
-              </span>
-            </div>
-          )}
-
-          {/* Authenticating */}
-          {showAuth && (
-            <div className="pt-2">
-              <span className="text-yellow-400/80" style={{ textShadow: "0 0 6px rgba(250,204,21,0.3)" }}>
-                {phase === "authenticating" ? (
-                  <span className="animate-pulse">AUTHENTICATING...</span>
-                ) : (
-                  "AUTHENTICATING..."
-                )}
-              </span>
-            </div>
-          )}
-
-          {/* Access granted */}
-          {showGranted && (
-            <div className="pt-1">
-              <span
-                className="text-green-300 font-bold tracking-wider"
-                style={{ textShadow: "0 0 12px rgba(74,222,128,0.6), 0 0 24px rgba(74,222,128,0.3)" }}
-              >
-                ACCESS GRANTED
-              </span>
-            </div>
-          )}
+        {/* C - slightly overlapping, offset down like in the screenshot */}
+        <div
+          className="transition-all ease-[cubic-bezier(0.4,0,0.2,1)] -ml-8 md:-ml-12 mt-8 md:mt-12"
+          style={{
+            transitionDuration: split ? "700ms" : "0ms",
+            transform: split ? "translateX(120vw) rotate(15deg)" : "translateX(0)",
+            opacity: split ? 0 : 1,
+          }}
+        >
+          <span
+            className="text-[10rem] md:text-[13rem] lg:text-[16rem] font-black leading-none tracking-tighter"
+            style={{
+              color: "#4DB8D1",
+              textShadow:
+                "4px 4px 0 rgba(0,0,0,0.4), 0 0 40px rgba(77,184,209,0.15)",
+              WebkitTextStroke: "1px rgba(0,0,0,0.1)",
+            }}
+          >
+            C
+          </span>
         </div>
+      </div>
 
-        {/* Bottom decoration */}
-        <div className="font-mono text-green-500/20 text-xs mt-8 tracking-widest">
-          {">"} INITIALIZING SESSION...
-        </div>
+      {/* Click to enter hint */}
+      <div
+        className={`fixed bottom-12 left-0 right-0 text-center transition-opacity duration-700 ${
+          showHint && !split ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <span className="text-white/30 text-sm font-sans tracking-widest uppercase animate-pulse">
+          Click to enter
+        </span>
       </div>
     </div>
   )
