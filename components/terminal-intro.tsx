@@ -1,214 +1,257 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 
-const USERNAME = "neilchandran"
-const PASSWORD_MASK = "*********"
-const CHAR_DELAY = 90
-const AUTH_DELAY = 1200
-const GRANTED_DELAY = 800
-
-type Phase =
-  | "username-label"
-  | "username-typing"
-  | "password-label"
-  | "password-typing"
-  | "authenticating"
-  | "granted"
-  | "exit"
+/*
+ * Video-game studio intro: scattered blocks snap into position,
+ * then dissolve to reveal clean, seamless "NC" letterforms.
+ * N = matte white, C = solid cyan. C leans on N (TT Games style).
+ */
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<Phase>("username-label")
-  const [typedUsername, setTypedUsername] = useState("")
-  const [typedPassword, setTypedPassword] = useState("")
-  const [showCursor, setShowCursor] = useState(true)
-  const [exiting, setExiting] = useState(false)
+  const [phase, setPhase] = useState<"idle" | "building" | "formed" | "logo" | "loading" | "done">("idle")
+  const [loadProgress, setLoadProgress] = useState(0)
+  const [showHint, setShowHint] = useState(false)
+  const triggered = useRef(false)
 
-  // Blinking cursor
+  // Show hint after brief delay
   useEffect(() => {
-    const interval = setInterval(() => setShowCursor((v) => !v), 530)
-    return () => clearInterval(interval)
+    const t = setTimeout(() => setShowHint(true), 500)
+    return () => clearTimeout(t)
   }, [])
 
-  // Phase: show username label then start typing
+  // Loading bar
   useEffect(() => {
-    if (phase === "username-label") {
-      const t = setTimeout(() => setPhase("username-typing"), 400)
-      return () => clearTimeout(t)
+    if (phase !== "loading") return
+    const start = Date.now()
+    const duration = 700
+    const tick = () => {
+      const p = Math.min((Date.now() - start) / duration, 1)
+      setLoadProgress(p)
+      if (p < 1) {
+        requestAnimationFrame(tick)
+      } else {
+        setPhase("done")
+        setTimeout(onComplete, 400)
+      }
     }
-  }, [phase])
-
-  // Type username
-  useEffect(() => {
-    if (phase !== "username-typing") return
-    if (typedUsername.length < USERNAME.length) {
-      const t = setTimeout(() => {
-        setTypedUsername(USERNAME.slice(0, typedUsername.length + 1))
-      }, CHAR_DELAY)
-      return () => clearTimeout(t)
-    }
-    const t = setTimeout(() => setPhase("password-label"), 300)
-    return () => clearTimeout(t)
-  }, [phase, typedUsername])
-
-  // Phase: show password label then start typing
-  useEffect(() => {
-    if (phase === "password-label") {
-      const t = setTimeout(() => setPhase("password-typing"), 400)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Type password
-  useEffect(() => {
-    if (phase !== "password-typing") return
-    if (typedPassword.length < PASSWORD_MASK.length) {
-      const t = setTimeout(() => {
-        setTypedPassword(PASSWORD_MASK.slice(0, typedPassword.length + 1))
-      }, CHAR_DELAY)
-      return () => clearTimeout(t)
-    }
-    const t = setTimeout(() => setPhase("authenticating"), 300)
-    return () => clearTimeout(t)
-  }, [phase, typedPassword])
-
-  // Authenticating phase
-  useEffect(() => {
-    if (phase === "authenticating") {
-      const t = setTimeout(() => setPhase("granted"), AUTH_DELAY)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Granted phase -> exit
-  useEffect(() => {
-    if (phase === "granted") {
-      const t = setTimeout(() => setPhase("exit"), GRANTED_DELAY)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
-
-  // Exit animation
-  useEffect(() => {
-    if (phase === "exit") {
-      setExiting(true)
-      const t = setTimeout(onComplete, 600)
-      return () => clearTimeout(t)
-    }
+    requestAnimationFrame(tick)
   }, [phase, onComplete])
 
-  const handleSkip = useCallback(() => {
-    setExiting(true)
-    setTimeout(onComplete, 300)
-  }, [onComplete])
+  const handleTrigger = useCallback(() => {
+    if (triggered.current) return
+    triggered.current = true
+    setPhase("building")
+    // Blocks arrive
+    setTimeout(() => setPhase("formed"), 500)
+    // Blocks dissolve, clean logo appears
+    setTimeout(() => setPhase("logo"), 700)
+    // Loading bar
+    setTimeout(() => setPhase("loading"), 1000)
+  }, [])
 
-  const cursor = showCursor ? "\u2588" : "\u00A0"
+  useEffect(() => {
+    const handler = () => handleTrigger()
+    window.addEventListener("keydown", handler)
+    return () => window.removeEventListener("keydown", handler)
+  }, [handleTrigger])
 
-  const showUsernameLabel = phase !== "username-label" || true
-  const showPasswordLine =
-    phase === "password-label" ||
-    phase === "password-typing" ||
-    phase === "authenticating" ||
-    phase === "granted" ||
-    phase === "exit"
-  const showAuth = phase === "authenticating" || phase === "granted" || phase === "exit"
-  const showGranted = phase === "granted" || phase === "exit"
+  const handleSkip = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setPhase("done")
+      setTimeout(onComplete, 200)
+    },
+    [onComplete],
+  )
 
-  // Determine where cursor goes
-  const cursorOnUsername = phase === "username-label" || phase === "username-typing"
-  const cursorOnPassword = phase === "password-label" || phase === "password-typing"
+  // Block data for construction effect - simple 5x7 grids
+  const nShape = [
+    [1,0,0,0,1],
+    [1,1,0,0,1],
+    [1,1,0,0,1],
+    [1,0,1,0,1],
+    [1,0,1,1,1],
+    [1,0,0,1,1],
+    [1,0,0,0,1],
+  ]
+  const cShape = [
+    [0,1,1,1],
+    [1,1,0,0],
+    [1,0,0,0],
+    [1,0,0,0],
+    [1,0,0,0],
+    [1,1,0,0],
+    [0,1,1,1],
+  ]
+
+  const blockSize = 18
+  const blockGap = 2
+  const step = blockSize + blockGap
+
+  // Build block arrays with scatter positions (computed once via ref)
+  const scatterRef = useRef<{ nx: number; ny: number }[]>([])
+  if (scatterRef.current.length === 0) {
+    const allBlocks: { nx: number; ny: number }[] = []
+    for (let r = 0; r < nShape.length; r++) {
+      for (let c = 0; c < nShape[r].length; c++) {
+        if (nShape[r][c]) allBlocks.push({ nx: 0, ny: 0 })
+      }
+    }
+    for (let r = 0; r < cShape.length; r++) {
+      for (let c = 0; c < cShape[r].length; c++) {
+        if (cShape[r][c]) allBlocks.push({ nx: 0, ny: 0 })
+      }
+    }
+    scatterRef.current = allBlocks.map(() => ({
+      nx: (Math.floor(Math.random() * 30) - 15) * step,
+      ny: (Math.floor(Math.random() * 20) - 10) * step,
+    }))
+  }
+
+  // Flatten block positions
+  const nBlocks: { fx: number; fy: number; letter: "n" }[] = []
+  for (let r = 0; r < nShape.length; r++) {
+    for (let c = 0; c < nShape[r].length; c++) {
+      if (nShape[r][c]) nBlocks.push({ fx: c * step, fy: r * step, letter: "n" })
+    }
+  }
+  const cBlocks: { fx: number; fy: number; letter: "c" }[] = []
+  for (let r = 0; r < cShape.length; r++) {
+    for (let c = 0; c < cShape[r].length; c++) {
+      if (cShape[r][c]) cBlocks.push({ fx: (c + 5.5) * step, fy: r * step, letter: "c" })
+    }
+  }
+  const allBlocks = [...nBlocks, ...cBlocks]
+  const scatter = scatterRef.current
+
+  const isBuilding = phase === "building" || phase === "formed"
+  const blocksVisible = phase === "idle" || phase === "building" || phase === "formed"
+  const logoVisible = phase === "logo" || phase === "loading" || phase === "done"
+  const isDone = phase === "done"
+
+  const gridW = 9.5 * step
+  const gridH = 7 * step
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-500 ${
-        exiting ? "opacity-0" : "opacity-100"
-      }`}
+      onClick={handleTrigger}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center select-none overflow-hidden"
+      style={{
+        background: "#0a0a0a",
+        cursor: phase === "idle" ? "pointer" : "default",
+        opacity: isDone ? 0 : 1,
+        transition: "opacity 350ms ease",
+        pointerEvents: isDone ? "none" : "auto",
+      }}
     >
-      {/* Scanline overlay */}
-      <div
-        className="pointer-events-none fixed inset-0 z-10"
-        style={{
-          background:
-            "repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 1px, transparent 1px, transparent 3px)",
-        }}
-      />
-
-      {/* Vignette */}
-      <div
-        className="pointer-events-none fixed inset-0 z-10"
-        style={{
-          background: "radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.6) 100%)",
-        }}
-      />
-
-      {/* Skip button */}
+      {/* Skip */}
       <button
         onClick={handleSkip}
-        className="fixed top-6 right-6 z-20 font-mono text-sm text-green-500/60 hover:text-green-400 transition-colors border border-green-500/30 hover:border-green-400/50 px-3 py-1.5 rounded"
+        className="fixed top-6 right-6 z-20 text-white/10 hover:text-white/30 transition-colors font-mono uppercase text-[10px] tracking-[0.3em] px-3 py-1.5"
       >
-        SKIP
+        Skip
       </button>
 
-      {/* Terminal */}
-      <div className="relative z-20 w-full max-w-lg px-8">
-        {/* System header */}
-        <div className="font-mono text-green-500/50 text-xs mb-6 tracking-widest">
-          {">"} CHANDRAN SYSTEMS v2.029 -- SECURE TERMINAL
-        </div>
+      {/* Construction blocks layer */}
+      <div
+        className="relative"
+        style={{
+          width: gridW,
+          height: gridH,
+          opacity: blocksVisible ? (phase === "formed" ? 0 : 1) : 0,
+          transition: "opacity 200ms ease",
+        }}
+      >
+        {allBlocks.map((block, i) => {
+          const arrived = isBuilding
+          return (
+            <div
+              key={i}
+              className="absolute"
+              style={{
+                width: blockSize,
+                height: blockSize,
+                background: block.letter === "n" ? "#d4d4d4" : "#22d3ee",
+                transform: arrived
+                  ? `translate(${block.fx}px, ${block.fy}px)`
+                  : `translate(${scatter[i]?.nx ?? 0}px, ${scatter[i]?.ny ?? 0}px)`,
+                transition: arrived
+                  ? `transform 380ms cubic-bezier(0.22, 1, 0.36, 1) ${i * 8}ms`
+                  : "none",
+                opacity: phase === "idle" ? 0.25 : 1,
+              }}
+            />
+          )
+        })}
+      </div>
 
-        <div className="font-mono text-green-400 text-base space-y-3 leading-relaxed" style={{ textShadow: "0 0 8px rgba(74,222,128,0.4)" }}>
-          {/* Username line */}
-          {showUsernameLabel && (
-            <div className="flex">
-              <span className="text-green-500/70 mr-2">USERNAME:</span>
-              <span>
-                {typedUsername}
-                {cursorOnUsername && <span className="text-green-400">{cursor}</span>}
-              </span>
+      {/* Clean logo layer - appears after blocks dissolve */}
+      <div
+        className="absolute flex items-end"
+        style={{
+          gap: "4px",
+          opacity: logoVisible ? 1 : 0,
+          transform: logoVisible ? "scale(1)" : "scale(0.95)",
+          transition: "opacity 250ms ease, transform 250ms ease",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+            fontSize: "120px",
+            fontWeight: 900,
+            lineHeight: 1,
+            color: "#e5e5e5",
+            letterSpacing: "-0.04em",
+          }}
+        >
+          N
+        </span>
+        <span
+          style={{
+            fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
+            fontSize: "88px",
+            fontWeight: 900,
+            lineHeight: 1,
+            color: "#22d3ee",
+            letterSpacing: "-0.04em",
+            marginLeft: "-12px",
+            marginBottom: "2px",
+            transform: "rotate(-3deg)",
+            transformOrigin: "bottom left",
+          }}
+        >
+          C
+        </span>
+      </div>
+
+      {/* Bottom area: hint or loading bar */}
+      <div className="absolute bottom-16 flex flex-col items-center gap-3" style={{ minHeight: 40 }}>
+        {phase === "loading" ? (
+          <>
+            <div style={{ width: 180, height: 2, background: "#1a1a1a" }}>
+              <div
+                style={{
+                  width: `${loadProgress * 100}%`,
+                  height: "100%",
+                  background: "#e5e5e5",
+                  transition: "width 30ms linear",
+                }}
+              />
             </div>
-          )}
-
-          {/* Password line */}
-          {showPasswordLine && (
-            <div className="flex">
-              <span className="text-green-500/70 mr-2">PASSWORD:</span>
-              <span className="tracking-wider">
-                {typedPassword}
-                {cursorOnPassword && <span className="text-green-400">{cursor}</span>}
-              </span>
-            </div>
-          )}
-
-          {/* Authenticating */}
-          {showAuth && (
-            <div className="pt-2">
-              <span className="text-yellow-400/80" style={{ textShadow: "0 0 6px rgba(250,204,21,0.3)" }}>
-                {phase === "authenticating" ? (
-                  <span className="animate-pulse">AUTHENTICATING...</span>
-                ) : (
-                  "AUTHENTICATING..."
-                )}
-              </span>
-            </div>
-          )}
-
-          {/* Access granted */}
-          {showGranted && (
-            <div className="pt-1">
-              <span
-                className="text-green-300 font-bold tracking-wider"
-                style={{ textShadow: "0 0 12px rgba(74,222,128,0.6), 0 0 24px rgba(74,222,128,0.3)" }}
-              >
-                ACCESS GRANTED
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Bottom decoration */}
-        <div className="font-mono text-green-500/20 text-xs mt-8 tracking-widest">
-          {">"} INITIALIZING SESSION...
-        </div>
+            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">
+              Loading
+            </span>
+          </>
+        ) : phase === "idle" ? (
+          <span
+            className="text-[9px] font-mono tracking-[0.3em] uppercase transition-opacity duration-500"
+            style={{ color: "rgba(255,255,255,0.15)", opacity: showHint ? 1 : 0 }}
+          >
+            Press any key
+          </span>
+        ) : null}
       </div>
     </div>
   )
