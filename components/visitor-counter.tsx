@@ -22,8 +22,8 @@ export function VisitorCounter() {
   if (count === null) return null
 
   return (
-    <div className="fixed bottom-6 left-6 text-sm text-foreground/60 font-mono">
-      visitors: {count.toString().padStart(6, "0")}
+    <div className="fixed bottom-6 left-6 text-[10px] text-[#737373]/50 tracking-widest uppercase">
+      sys.visitors: {count.toString().padStart(6, "0")}
     </div>
   )
 }
