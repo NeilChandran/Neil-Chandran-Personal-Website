@@ -14,13 +14,13 @@ const accentColors = [
 export function Navigation() {
   const [isDark, setIsDark] = useState(true)
   const [mounted, setMounted] = useState(false)
-  const [activeColor, setActiveColor] = useState("Blue")
+  const [activeColor, setActiveColor] = useState("Green")
 
   useEffect(() => {
     setMounted(true)
     const htmlElement = document.documentElement
     setIsDark(htmlElement.classList.contains("dark"))
-    const savedColor = localStorage.getItem("accentColor") || "Blue"
+    const savedColor = localStorage.getItem("accentColor") || "Green"
     setActiveColor(savedColor)
     const color = accentColors.find((c) => c.name === savedColor) || accentColors[0]
     const isDarkMode = htmlElement.classList.contains("dark")
@@ -38,7 +38,8 @@ export function Navigation() {
       localStorage.setItem("theme", "light")
     }
     setIsDark(newIsDark)
-    const color = accentColors.find((c) => c.name === activeColor) || accentColors[0]
+    // If switching to green in dark mode, also set the foreground CSS var
+    const color = accentColors.find((c) => c.name === activeColor) || accentColors[1]
     document.documentElement.style.setProperty("--link-color", newIsDark ? color.dark : color.light)
   }
 
