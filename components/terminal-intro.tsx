@@ -4,16 +4,13 @@ import { useState, useEffect, useCallback } from "react"
 
 const USERNAME = "neilchandran"
 const PASSWORD_MASK = "*********"
-const CHAR_DELAY = 80
-const AUTH_DELAY = 1400
-const GRANTED_DELAY = 900
-const WELCOME_DELAY = 2800
+const CHAR_DELAY = 70
+const AUTH_DELAY = 1000
+const GRANTED_DELAY = 600
+const WELCOME_DELAY = 2200
 
 type Phase =
-  | "boot"
-  | "username-label"
   | "username-typing"
-  | "password-label"
   | "password-typing"
   | "authenticating"
   | "granted"
@@ -21,49 +18,17 @@ type Phase =
   | "exit"
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<Phase>("boot")
+  const [phase, setPhase] = useState<Phase>("username-typing")
   const [typedUsername, setTypedUsername] = useState("")
   const [typedPassword, setTypedPassword] = useState("")
   const [showCursor, setShowCursor] = useState(true)
   const [exiting, setExiting] = useState(false)
-  const [bootLines, setBootLines] = useState<string[]>([])
 
   // Blinking cursor
   useEffect(() => {
     const interval = setInterval(() => setShowCursor((v) => !v), 530)
     return () => clearInterval(interval)
   }, [])
-
-  // Boot sequence
-  useEffect(() => {
-    if (phase !== "boot") return
-    const lines = [
-      "CHANDRAN SYSTEMS v2.029",
-      "INITIALIZING SECURE TERMINAL...",
-      "LOADING ENCRYPTION MODULES... OK",
-      "ESTABLISHING SECURE CONNECTION... OK",
-      "READY.",
-    ]
-    let i = 0
-    const interval = setInterval(() => {
-      if (i < lines.length) {
-        setBootLines((prev) => [...prev, lines[i]])
-        i++
-      } else {
-        clearInterval(interval)
-        setTimeout(() => setPhase("username-label"), 400)
-      }
-    }, 280)
-    return () => clearInterval(interval)
-  }, [phase])
-
-  // Phase: show username label then start typing
-  useEffect(() => {
-    if (phase === "username-label") {
-      const t = setTimeout(() => setPhase("username-typing"), 400)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
 
   // Type username
   useEffect(() => {
@@ -74,17 +39,9 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
       }, CHAR_DELAY)
       return () => clearTimeout(t)
     }
-    const t = setTimeout(() => setPhase("password-label"), 300)
+    const t = setTimeout(() => setPhase("password-typing"), 250)
     return () => clearTimeout(t)
   }, [phase, typedUsername])
-
-  // Phase: show password label then start typing
-  useEffect(() => {
-    if (phase === "password-label") {
-      const t = setTimeout(() => setPhase("password-typing"), 400)
-      return () => clearTimeout(t)
-    }
-  }, [phase])
 
   // Type password
   useEffect(() => {
@@ -95,7 +52,7 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
       }, CHAR_DELAY)
       return () => clearTimeout(t)
     }
-    const t = setTimeout(() => setPhase("authenticating"), 300)
+    const t = setTimeout(() => setPhase("authenticating"), 250)
     return () => clearTimeout(t)
   }, [phase, typedPassword])
 
@@ -139,9 +96,7 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
 
   const cursor = showCursor ? "\u2588" : "\u00A0"
 
-  const showLogin = phase !== "boot"
   const showPasswordLine =
-    phase === "password-label" ||
     phase === "password-typing" ||
     phase === "authenticating" ||
     phase === "granted" ||
@@ -155,9 +110,6 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
   const showGranted =
     phase === "granted" || phase === "welcome" || phase === "exit"
   const showWelcome = phase === "welcome" || phase === "exit"
-
-  const cursorOnUsername = phase === "username-label" || phase === "username-typing"
-  const cursorOnPassword = phase === "password-label" || phase === "password-typing"
 
   return (
     <div
@@ -190,16 +142,10 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
         SKIP
       </button>
 
-      {/* Welcome overlay -- full screen cinematic */}
+      {/* Welcome overlay */}
       {showWelcome && (
         <div className="fixed inset-0 z-30 flex flex-col items-center justify-center animate-in fade-in duration-500">
           <div className="text-center space-y-4">
-            <p
-              className="font-mono text-green-500/60 text-xs tracking-[0.4em] uppercase"
-              style={{ textShadow: "0 0 8px rgba(74,222,128,0.3)" }}
-            >
-              Identity Verified -- Clearance Level 5
-            </p>
             <h1
               className="font-mono text-green-400 text-5xl md:text-7xl font-bold tracking-widest"
               style={{ textShadow: "0 0 20px rgba(74,222,128,0.5), 0 0 40px rgba(74,222,128,0.2)" }}
@@ -210,107 +156,70 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
               className="w-48 h-px mx-auto bg-green-500/40 mt-6"
               style={{ boxShadow: "0 0 10px rgba(74,222,128,0.3)" }}
             />
-            <p
-              className="font-mono text-green-500/40 text-xs tracking-widest mt-4"
-            >
-              INITIALIZING SESSION...
-            </p>
           </div>
         </div>
       )}
 
-      {/* Terminal -- hidden during welcome */}
+      {/* Terminal login */}
       {!showWelcome && (
         <div className="relative z-20 h-full flex items-center justify-center">
           <div className="w-full max-w-lg px-8">
-            {/* Boot lines */}
-            {phase === "boot" && (
-              <div className="font-mono text-green-500/70 text-xs space-y-1 mb-6">
-                {bootLines.map((line, i) => (
-                  <div key={i} className="tracking-wider">
-                    {">"} {line}
-                  </div>
-                ))}
+            <div
+              className="font-mono text-green-400 text-base space-y-3 leading-relaxed"
+              style={{ textShadow: "0 0 8px rgba(74,222,128,0.4)" }}
+            >
+              {/* Username line */}
+              <div className="flex">
+                <span className="text-green-500/70 mr-2">USERNAME:</span>
+                <span>
+                  {typedUsername}
+                  {phase === "username-typing" && (
+                    <span className="text-green-400">{cursor}</span>
+                  )}
+                </span>
               </div>
-            )}
 
-            {/* System header */}
-            {showLogin && (
-              <>
-                <div className="font-mono text-green-500/50 text-xs mb-6 tracking-widest">
-                  {">"} CHANDRAN SYSTEMS v2.029 -- SECURE TERMINAL
+              {/* Password line */}
+              {showPasswordLine && (
+                <div className="flex">
+                  <span className="text-green-500/70 mr-2">PASSWORD:</span>
+                  <span className="tracking-wider">
+                    {typedPassword}
+                    {phase === "password-typing" && (
+                      <span className="text-green-400">{cursor}</span>
+                    )}
+                  </span>
                 </div>
+              )}
 
-                <div
-                  className="font-mono text-green-400 text-base space-y-3 leading-relaxed"
-                  style={{ textShadow: "0 0 8px rgba(74,222,128,0.4)" }}
-                >
-                  {/* Username line */}
-                  <div className="flex">
-                    <span className="text-green-500/70 mr-2">USERNAME:</span>
-                    <span>
-                      {typedUsername}
-                      {cursorOnUsername && (
-                        <span className="text-green-400">{cursor}</span>
-                      )}
-                    </span>
-                  </div>
-
-                  {/* Password line */}
-                  {showPasswordLine && (
-                    <div className="flex">
-                      <span className="text-green-500/70 mr-2">PASSWORD:</span>
-                      <span className="tracking-wider">
-                        {typedPassword}
-                        {cursorOnPassword && (
-                          <span className="text-green-400">{cursor}</span>
-                        )}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Authenticating */}
-                  {showAuth && (
-                    <div className="pt-2">
-                      <span
-                        className="text-yellow-400/80"
-                        style={{
-                          textShadow: "0 0 6px rgba(250,204,21,0.3)",
-                        }}
-                      >
-                        {phase === "authenticating" ? (
-                          <span className="animate-pulse">
-                            AUTHENTICATING...
-                          </span>
-                        ) : (
-                          "AUTHENTICATING..."
-                        )}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Access granted */}
-                  {showGranted && (
-                    <div className="pt-1">
-                      <span
-                        className="text-green-300 font-bold tracking-wider"
-                        style={{
-                          textShadow:
-                            "0 0 12px rgba(74,222,128,0.6), 0 0 24px rgba(74,222,128,0.3)",
-                        }}
-                      >
-                        ACCESS GRANTED
-                      </span>
-                    </div>
-                  )}
+              {/* Authenticating */}
+              {showAuth && (
+                <div className="pt-2">
+                  <span className="text-green-400/80">
+                    {phase === "authenticating" ? (
+                      <span className="animate-pulse">AUTHENTICATING...</span>
+                    ) : (
+                      "AUTHENTICATING..."
+                    )}
+                  </span>
                 </div>
+              )}
 
-                {/* Bottom decoration */}
-                <div className="font-mono text-green-500/20 text-xs mt-8 tracking-widest">
-                  {">"} LOADING PROFILE...
+              {/* Access granted */}
+              {showGranted && (
+                <div className="pt-1">
+                  <span
+                    className="text-green-300 font-bold tracking-wider"
+                    style={{
+                      textShadow:
+                        "0 0 12px rgba(74,222,128,0.6), 0 0 24px rgba(74,222,128,0.3)",
+                    }}
+                  >
+                    ACCESS GRANTED
+                  </span>
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
