@@ -12,7 +12,7 @@ export function VisitorCounter() {
         const data = await res.json()
         setCount(data.count)
       } catch (error) {
-        console.error("[v0] Failed to fetch visitor count:", error)
+        console.error("Failed to fetch visitor count:", error)
       }
     }
 
@@ -22,8 +22,8 @@ export function VisitorCounter() {
   if (count === null) return null
 
   return (
-    <div className="fixed bottom-6 left-6 text-sm text-foreground/60 font-mono">
-      visitors: {count.toString().padStart(6, "0")}
+    <div className="fixed bottom-6 left-6 text-[10px] text-muted-foreground/50 tracking-widest uppercase">
+      sys.visitors: {count.toString().padStart(6, "0")}
     </div>
   )
 }

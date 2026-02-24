@@ -1,251 +1,243 @@
 "use client"
 
-import { useState, useCallback, useEffect, useRef } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Text3D, Center } from "@react-three/drei"
-import * as THREE from "three"
+import { useState, useEffect, useCallback, useRef } from "react"
 
-/* ── 3D Letter that slides in from an offset ─────────────────────── */
-
-function Letter3D({
-  char,
-  color,
-  position,
-  rotation,
-  startOffset,
-  trigger,
-  delay,
-}: {
-  char: string
-  color: string
-  position: [number, number, number]
-  rotation?: [number, number, number]
-  startOffset: [number, number, number]
-  trigger: boolean
-  delay: number
-}) {
-  const ref = useRef<THREE.Group>(null)
-  const progress = useRef(0)
-  const started = useRef(false)
-  const elapsed = useRef(0)
-
-  useFrame((_, delta) => {
-    if (!ref.current) return
-
-    if (trigger) {
-      elapsed.current += delta * 1000
-      if (elapsed.current >= delay) {
-        started.current = true
-      }
-    }
-
-    if (started.current && progress.current < 1) {
-      // Fast ease-out
-      progress.current = Math.min(progress.current + delta * 3.2, 1)
-    }
-
-    // Cubic ease-out
-    const t = 1 - Math.pow(1 - progress.current, 3)
-
-    ref.current.position.x = position[0] + startOffset[0] * (1 - t)
-    ref.current.position.y = position[1] + startOffset[1] * (1 - t)
-    ref.current.position.z = position[2] + startOffset[2] * (1 - t)
-  })
-
-  return (
-    <group
-      ref={ref}
-      position={[
-        position[0] + startOffset[0],
-        position[1] + startOffset[1],
-        position[2] + startOffset[2],
-      ]}
-      rotation={rotation ? rotation.map((r) => (r * Math.PI) / 180) as [number, number, number] : [0, 0, 0]}
-    >
-      <Text3D
-        font="/fonts/Inter_Bold.json"
-        size={2.2}
-        height={0.8}
-        bevelEnabled={false}
-      >
-        {char}
-        <meshStandardMaterial color={color} roughness={0.85} metalness={0.05} />
-      </Text3D>
-    </group>
-  )
-}
-
-/* ── Subtle camera drift ──────────────────────────────────────────── */
-
-function CameraDrift() {
-  useFrame(({ camera, clock }) => {
-    const t = clock.getElapsedTime()
-    camera.position.x = Math.sin(t * 0.15) * 0.12
-    camera.position.y = 6 + Math.cos(t * 0.12) * 0.08
-    camera.lookAt(0, 0, 0)
-  })
-  return null
-}
-
-/* ── Scene ────────────────────────────────────────────────────────── */
-
-function Scene({ trigger }: { trigger: boolean }) {
-  return (
-    <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 8, 5]} intensity={1.2} />
-      <directionalLight position={[-3, 4, -2]} intensity={0.3} />
-
-      <CameraDrift />
-
-      {/* N - matte white, enters from the left */}
-      <Center position={[-1.2, 0, 0]} disableY disableZ>
-        <Letter3D
-          char="N"
-          color="#e0e0e0"
-          position={[-1.2, 0, 0]}
-          startOffset={[-8, 0, 0]}
-          trigger={trigger}
-          delay={0}
-        />
-      </Center>
-
-      {/* C - cyan, enters from the right, slightly rotated and leaning */}
-      <Center position={[1.6, -0.25, 0.15]} disableY disableZ>
-        <Letter3D
-          char="C"
-          color="#22d3ee"
-          position={[1.6, -0.25, 0.15]}
-          rotation={[0, 0, -3]}
-          startOffset={[8, 0, 0]}
-          trigger={trigger}
-          delay={150}
-        />
-      </Center>
-
-      {/* Ground plane for subtle shadow reference */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.1, 0]} receiveShadow>
-        <planeGeometry args={[30, 30]} />
-        <meshStandardMaterial color="#0a0a0a" roughness={1} />
-      </mesh>
-    </>
-  )
-}
-
-/* ── Main component ───────────────────────────────────────────────── */
+type Phase =
+  | "idle"
+  | "username-label"
+  | "username"
+  | "password-label"
+  | "password"
+  | "auth"
+  | "granted"
+  | "welcome"
+  | "done"
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<"idle" | "building" | "loading" | "done">("idle")
-  const [loadProgress, setLoadProgress] = useState(0)
-  const [showHint, setShowHint] = useState(false)
-  const triggered = useRef(false)
+  const [phase, setPhase] = useState<Phase>("idle")
+  const [usernameLabel, setUsernameLabel] = useState("")
+  const [username, setUsername] = useState("")
+  const [passwordLabel, setPasswordLabel] = useState("")
+  const [password, setPassword] = useState("")
+  const [authDots, setAuthDots] = useState("")
+  const [fadeOut, setFadeOut] = useState(false)
+  const [welcomeFade, setWelcomeFade] = useState(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const CHAR_SPEED = 90
+  const LABEL_SPEED = 50
+
+  const typeText = useCallback(
+    (
+      text: string,
+      setter: React.Dispatch<React.SetStateAction<string>>,
+      speed: number,
+      onDone: () => void,
+    ) => {
+      let i = 0
+      intervalRef.current = setInterval(() => {
+        i++
+        setter(text.slice(0, i))
+        if (i >= text.length) {
+          if (intervalRef.current) clearInterval(intervalRef.current)
+          onDone()
+        }
+      }, speed)
+    },
+    [],
+  )
 
   useEffect(() => {
-    const t = setTimeout(() => setShowHint(true), 600)
-    return () => clearTimeout(t)
-  }, [])
+    const delay = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-  // Loading bar after build
-  useEffect(() => {
-    if (phase !== "loading") return
-    const start = Date.now()
-    const duration = 700
-    const tick = () => {
-      const p = Math.min((Date.now() - start) / duration, 1)
-      setLoadProgress(p)
-      if (p < 1) requestAnimationFrame(tick)
-      else {
-        setPhase("done")
-        setTimeout(onComplete, 350)
+    if (phase === "idle") {
+      const t = setTimeout(() => setPhase("username-label"), 400)
+      return () => clearTimeout(t)
+    }
+
+    if (phase === "username-label") {
+      typeText("USERNAME: ", setUsernameLabel, LABEL_SPEED, () => {
+        setPhase("username")
+      })
+      return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+    }
+
+    if (phase === "username") {
+      typeText("neilchandran", setUsername, CHAR_SPEED, () => {
+        delay(300).then(() => setPhase("password-label"))
+      })
+      return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+    }
+
+    if (phase === "password-label") {
+      typeText("PASSWORD: ", setPasswordLabel, LABEL_SPEED, () => {
+        setPhase("password")
+      })
+      return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+    }
+
+    if (phase === "password") {
+      typeText("*********", setPassword, CHAR_SPEED, () => {
+        delay(400).then(() => setPhase("auth"))
+      })
+      return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+    }
+
+    if (phase === "auth") {
+      let dotCount = 0
+      const dotInterval = setInterval(() => {
+        dotCount = (dotCount % 3) + 1
+        setAuthDots(".".repeat(dotCount))
+      }, 350)
+
+      const timeout = setTimeout(() => {
+        clearInterval(dotInterval)
+        setPhase("granted")
+      }, 1400)
+
+      return () => {
+        clearInterval(dotInterval)
+        clearTimeout(timeout)
       }
     }
-    requestAnimationFrame(tick)
-  }, [phase, onComplete])
 
-  const handleTrigger = useCallback(() => {
-    if (triggered.current) return
-    triggered.current = true
-    setPhase("building")
-    // After letters land, show loading bar
-    setTimeout(() => setPhase("loading"), 900)
-  }, [])
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Tab") return
-      handleTrigger()
+    if (phase === "granted") {
+      const t = setTimeout(() => {
+        setPhase("welcome")
+      }, 800)
+      return () => clearTimeout(t)
     }
-    window.addEventListener("keydown", handler)
-    return () => window.removeEventListener("keydown", handler)
-  }, [handleTrigger])
+
+    if (phase === "welcome") {
+      // Fade in the welcome text
+      const fadeInTimer = setTimeout(() => setWelcomeFade(true), 50)
+      // Hold, then fade out
+      const exitTimer = setTimeout(() => {
+        setFadeOut(true)
+        setTimeout(() => {
+          setPhase("done")
+          onComplete()
+        }, 600)
+      }, 1200)
+      return () => {
+        clearTimeout(fadeInTimer)
+        clearTimeout(exitTimer)
+      }
+    }
+  }, [phase, typeText, onComplete])
 
   const handleSkip = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation()
-      setPhase("done")
-      setTimeout(onComplete, 100)
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      setFadeOut(true)
+      setTimeout(() => {
+        setPhase("done")
+        onComplete()
+      }, 200)
     },
     [onComplete],
   )
 
-  const isDone = phase === "done"
+  if (phase === "done") return null
+
+  const showCursor = phase !== "auth" && phase !== "granted" && phase !== "welcome"
+  const isWelcome = phase === "welcome"
 
   return (
     <div
-      onClick={phase === "idle" ? handleTrigger : undefined}
-      className="fixed inset-0 z-50 select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       style={{
-        background: "#0a0a0a",
-        cursor: phase === "idle" ? "pointer" : "default",
-        opacity: isDone ? 0 : 1,
-        transition: "opacity 350ms ease",
-        pointerEvents: isDone ? "none" : "auto",
+        background: "#050505",
+        opacity: fadeOut ? 0 : 1,
+        transition: "opacity 600ms ease",
       }}
     >
-      {/* 3D Canvas */}
-      <Canvas
-        camera={{ position: [0, 6, 0.1], fov: 32, near: 0.1, far: 100 }}
-        gl={{ antialias: true }}
-        style={{ background: "transparent" }}
-      >
-        <Scene trigger={phase === "building" || phase === "loading" || phase === "done"} />
-      </Canvas>
+      {/* Scanlines */}
+      <div className="scanlines fixed inset-0 z-10" />
 
-      {/* Skip button */}
+      {/* Skip */}
       <button
         onClick={handleSkip}
-        className="fixed top-6 right-6 z-30 text-white/10 hover:text-white/30 transition-colors font-mono uppercase text-[10px] tracking-[0.3em] px-3 py-1.5"
+        className="fixed top-6 right-6 z-30 text-[#5eead4]/20 hover:text-[#5eead4]/50 transition-colors font-mono uppercase text-[10px] tracking-[0.3em] px-3 py-1.5"
       >
         Skip
       </button>
 
-      {/* Bottom hint or loading bar */}
-      <div className="fixed bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20">
-        {phase === "loading" ? (
-          <>
-            <div style={{ width: 160, height: 2, background: "#1a1a1a" }}>
+      {/* Welcome screen */}
+      {isWelcome && (
+        <div
+          className="absolute inset-0 z-20 flex items-center justify-center"
+          style={{
+            opacity: welcomeFade ? 1 : 0,
+            transition: "opacity 400ms ease",
+          }}
+        >
+          <div className="text-center">
+            <h1 className="font-mono text-3xl sm:text-5xl font-bold tracking-tight text-[#d4d4d4]">
+              WELCOME, NEIL
+            </h1>
+            <div className="mt-4 mx-auto w-24 h-px bg-[#5eead4]/40" />
+          </div>
+        </div>
+      )}
+
+      {/* Login terminal content */}
+      {!isWelcome && (
+        <div className="font-mono text-sm sm:text-base leading-relaxed z-20 max-w-lg px-8">
+          {phase !== "idle" && (
+            <div className="flex">
+              <span className="text-[#5eead4]/60">{usernameLabel}</span>
+              <span className="text-[#d4d4d4]">{username}</span>
+              {showCursor && (phase === "username" || phase === "username-label") && (
+                <span className="text-[#5eead4] animate-pulse">_</span>
+              )}
+            </div>
+          )}
+
+          {(phase === "password-label" || phase === "password" || phase === "auth" || phase === "granted") && (
+            <div className="flex mt-1">
+              <span className="text-[#5eead4]/60">{passwordLabel}</span>
+              <span className="text-[#d4d4d4]">{password}</span>
+              {showCursor && (phase === "password" || phase === "password-label") && (
+                <span className="text-[#5eead4] animate-pulse">_</span>
+              )}
+            </div>
+          )}
+
+          {(phase === "auth" || phase === "granted") && (
+            <div className="mt-4">
+              <span className="text-[#737373]">
+                {"AUTHENTICATING"}{authDots}
+              </span>
+            </div>
+          )}
+
+          {phase === "granted" && (
+            <div className="mt-2 relative">
+              <span className="text-[#5eead4] font-bold tracking-widest">
+                ACCESS GRANTED
+              </span>
+              {/* Subtle glitch line */}
               <div
+                className="absolute left-0 right-0 h-px bg-[#5eead4]/30"
                 style={{
-                  width: `${loadProgress * 100}%`,
-                  height: "100%",
-                  background: "#e5e5e5",
-                  transition: "width 30ms linear",
+                  top: "50%",
+                  animation: "glitch-line 0.3s ease-out forwards",
                 }}
               />
             </div>
-            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">
-              Loading
-            </span>
-          </>
-        ) : phase === "idle" ? (
-          <span
-            className="text-[9px] font-mono tracking-[0.3em] uppercase transition-opacity duration-500"
-            style={{ color: "rgba(255,255,255,0.15)", opacity: showHint ? 1 : 0 }}
-          >
-            Click to build
-          </span>
-        ) : null}
-      </div>
+          )}
+        </div>
+      )}
+
+      <style>{`
+        @keyframes glitch-line {
+          0% { transform: scaleX(0); opacity: 1; }
+          50% { transform: scaleX(1.2); opacity: 0.6; }
+          100% { transform: scaleX(0); opacity: 0; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { Navigation } from "@/components/navigation"
-import { Card } from "@/components/ui/card"
 
 const hobbies = [
   {
@@ -7,14 +6,12 @@ const hobbies = [
     timeline: "2015 - Present",
     image: "/tennis-racquet.jpg",
     description: "4 Years Varsity, Served as Captain",
-    gradient: "from-green-500/20 to-emerald-500/20",
   },
   {
     title: "Spanish Classical Guitar",
     timeline: "2014 - Present",
     image: "/classical-guitar.jpg",
     description: "",
-    gradient: "from-blue-500/20 to-cyan-500/20",
   },
 ]
 
@@ -22,22 +19,41 @@ export default function HobbiesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance">Hobbies & Interests</h1>
-        <p className="text-lg text-muted-foreground mb-12 text-pretty">What I enjoy doing outside of academics.</p>
+      <main className="max-w-3xl mx-auto px-6 py-12">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-foreground tracking-tight">
+          Hobbies & Interests
+        </h1>
+        <p className="text-xs text-muted-foreground mb-2 tracking-wider uppercase">
+          What I enjoy doing outside of academics.
+        </p>
+        <div className="h-px bg-gradient-to-r from-primary/30 to-transparent mb-10" />
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="space-y-6">
           {hobbies.map((hobby, index) => (
-            <Card key={index} className={`p-8 bg-gradient-to-br ${hobby.gradient} border-border/50`}>
-              <div className="mb-6 rounded-xl overflow-hidden">
-                <img src={hobby.image || "/placeholder.svg"} alt={hobby.title} className="w-full h-64 object-cover" />
+            <div
+              key={index}
+              className="border border-dashed border-border overflow-hidden hover:border-primary/30 transition-colors"
+            >
+              <div className="relative">
+                <img
+                  src={hobby.image || "/placeholder.svg"}
+                  alt={hobby.title}
+                  className="w-full h-52 object-cover opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
               </div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-2xl font-bold">{hobby.title}</h3>
-                <span className="text-sm text-muted-foreground font-medium">{hobby.timeline}</span>
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-sm font-bold text-foreground">{hobby.title}</h3>
+                  <span className="text-[10px] text-muted-foreground tracking-wider uppercase">
+                    {hobby.timeline}
+                  </span>
+                </div>
+                {hobby.description && (
+                  <p className="text-xs text-muted-foreground">{hobby.description}</p>
+                )}
               </div>
-              <p className="text-muted-foreground text-lg">{hobby.description}</p>
-            </Card>
+            </div>
           ))}
         </div>
       </main>
