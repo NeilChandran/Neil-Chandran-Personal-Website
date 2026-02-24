@@ -1,76 +1,162 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import { Text3D, Center } from "@react-three/drei"
+import * as THREE from "three"
 
-/**
- * Video-game LEGO-build intro.
- *
- * The "NC" logo is assembled from a small number of large pieces
- * that slide mechanically into place. Once locked, the pieces fuse
- * into a seamless logo. A loading bar fills, then fade to site.
- *
- * N pieces: left vertical stroke, diagonal stroke, right vertical stroke
- * C pieces: top horizontal bar, vertical spine, bottom horizontal bar
- */
+/* ── 3D Letter that slides in from an offset ─────────────────────── */
 
-type Piece = {
-  id: string
-  letter: "N" | "C"
-  // Final position (percentage-based offsets from logo center)
-  x: number
-  y: number
-  w: number
-  h: number
-  // Start offset before animation
-  startX: number
-  startY: number
-  delay: number
+function Letter3D({
+  char,
+  color,
+  position,
+  rotation,
+  startOffset,
+  trigger,
+  delay,
+}: {
+  char: string
   color: string
+  position: [number, number, number]
+  rotation?: [number, number, number]
+  startOffset: [number, number, number]
+  trigger: boolean
+  delay: number
+}) {
+  const ref = useRef<THREE.Group>(null)
+  const progress = useRef(0)
+  const started = useRef(false)
+  const elapsed = useRef(0)
+
+  useFrame((_, delta) => {
+    if (!ref.current) return
+
+    if (trigger) {
+      elapsed.current += delta * 1000
+      if (elapsed.current >= delay) {
+        started.current = true
+      }
+    }
+
+    if (started.current && progress.current < 1) {
+      // Fast ease-out
+      progress.current = Math.min(progress.current + delta * 3.2, 1)
+    }
+
+    // Cubic ease-out
+    const t = 1 - Math.pow(1 - progress.current, 3)
+
+    ref.current.position.x = position[0] + startOffset[0] * (1 - t)
+    ref.current.position.y = position[1] + startOffset[1] * (1 - t)
+    ref.current.position.z = position[2] + startOffset[2] * (1 - t)
+  })
+
+  return (
+    <group
+      ref={ref}
+      position={[
+        position[0] + startOffset[0],
+        position[1] + startOffset[1],
+        position[2] + startOffset[2],
+      ]}
+      rotation={rotation ? rotation.map((r) => (r * Math.PI) / 180) as [number, number, number] : [0, 0, 0]}
+    >
+      <Text3D
+        font="/fonts/Inter_Bold.json"
+        size={2.2}
+        height={0.8}
+        bevelEnabled={false}
+      >
+        {char}
+        <meshStandardMaterial color={color} roughness={0.85} metalness={0.05} />
+      </Text3D>
+    </group>
+  )
 }
 
-// N is built from 3 pieces, C from 3 pieces = 6 total large pieces
-// Coordinates are in px, relative to a virtual 300x200 canvas centered on screen
-const PIECES: Piece[] = [
-  // === N (white) ===
-  // Left vertical bar
-  { id: "n-left", letter: "N", x: 0, y: 0, w: 38, h: 160, startX: -400, startY: 0, delay: 0, color: "#e5e5e5" },
-  // Right vertical bar
-  { id: "n-right", letter: "N", x: 95, y: 0, w: 38, h: 160, startX: 400, startY: 0, delay: 80, color: "#e5e5e5" },
-  // Diagonal connector
-  { id: "n-diag", letter: "N", x: 18, y: 0, w: 97, h: 160, startX: 0, startY: -350, delay: 160, color: "#e5e5e5" },
+/* ── Subtle camera drift ──────────────────────────────────────────── */
 
-  // === C (cyan) ===
-  // Vertical spine (left side of C)
-  { id: "c-spine", letter: "C", x: 152, y: 18, w: 32, h: 124, startX: 0, startY: 350, delay: 100, color: "#22d3ee" },
-  // Top horizontal bar
-  { id: "c-top", letter: "C", x: 152, y: 0, w: 100, h: 32, startX: 400, startY: -200, delay: 200, color: "#22d3ee" },
-  // Bottom horizontal bar
-  { id: "c-bottom", letter: "C", x: 152, y: 128, w: 100, h: 32, startX: 400, startY: 200, delay: 280, color: "#22d3ee" },
-]
+function CameraDrift() {
+  useFrame(({ camera, clock }) => {
+    const t = clock.getElapsedTime()
+    camera.position.x = Math.sin(t * 0.15) * 0.12
+    camera.position.y = 6 + Math.cos(t * 0.12) * 0.08
+    camera.lookAt(0, 0, 0)
+  })
+  return null
+}
+
+/* ── Scene ────────────────────────────────────────────────────────── */
+
+function Scene({ trigger }: { trigger: boolean }) {
+  return (
+    <>
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 8, 5]} intensity={1.2} />
+      <directionalLight position={[-3, 4, -2]} intensity={0.3} />
+
+      <CameraDrift />
+
+      {/* N - matte white, enters from the left */}
+      <Center position={[-1.2, 0, 0]} disableY disableZ>
+        <Letter3D
+          char="N"
+          color="#e0e0e0"
+          position={[-1.2, 0, 0]}
+          startOffset={[-8, 0, 0]}
+          trigger={trigger}
+          delay={0}
+        />
+      </Center>
+
+      {/* C - cyan, enters from the right, slightly rotated and leaning */}
+      <Center position={[1.6, -0.25, 0.15]} disableY disableZ>
+        <Letter3D
+          char="C"
+          color="#22d3ee"
+          position={[1.6, -0.25, 0.15]}
+          rotation={[0, 0, -3]}
+          startOffset={[8, 0, 0]}
+          trigger={trigger}
+          delay={150}
+        />
+      </Center>
+
+      {/* Ground plane for subtle shadow reference */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.1, 0]} receiveShadow>
+        <planeGeometry args={[30, 30]} />
+        <meshStandardMaterial color="#0a0a0a" roughness={1} />
+      </mesh>
+    </>
+  )
+}
+
+/* ── Main component ───────────────────────────────────────────────── */
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<"idle" | "building" | "fused" | "loading" | "done">("idle")
+  const [phase, setPhase] = useState<"idle" | "building" | "loading" | "done">("idle")
   const [loadProgress, setLoadProgress] = useState(0)
   const [showHint, setShowHint] = useState(false)
   const triggered = useRef(false)
 
   useEffect(() => {
-    const t = setTimeout(() => setShowHint(true), 400)
+    const t = setTimeout(() => setShowHint(true), 600)
     return () => clearTimeout(t)
   }, [])
 
-  // Loading bar
+  // Loading bar after build
   useEffect(() => {
     if (phase !== "loading") return
     const start = Date.now()
-    const duration = 600
+    const duration = 700
     const tick = () => {
       const p = Math.min((Date.now() - start) / duration, 1)
       setLoadProgress(p)
       if (p < 1) requestAnimationFrame(tick)
       else {
         setPhase("done")
-        setTimeout(onComplete, 300)
+        setTimeout(onComplete, 350)
       }
     }
     requestAnimationFrame(tick)
@@ -80,13 +166,15 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
     if (triggered.current) return
     triggered.current = true
     setPhase("building")
-    // After all pieces land (last delay 280 + transition 400)
-    setTimeout(() => setPhase("fused"), 750)
-    setTimeout(() => setPhase("loading"), 950)
+    // After letters land, show loading bar
+    setTimeout(() => setPhase("loading"), 900)
   }, [])
 
   useEffect(() => {
-    const handler = () => handleTrigger()
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Tab") return
+      handleTrigger()
+    }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
   }, [handleTrigger])
@@ -100,23 +188,30 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
     [onComplete],
   )
 
-  const isBuilding = phase === "building"
-  const isFused = phase === "fused" || phase === "loading" || phase === "done"
   const isDone = phase === "done"
 
   return (
     <div
-      onClick={handleTrigger}
-      className="fixed inset-0 z-50 flex items-center justify-center select-none overflow-hidden"
+      onClick={phase === "idle" ? handleTrigger : undefined}
+      className="fixed inset-0 z-50 select-none"
       style={{
         background: "#0a0a0a",
         cursor: phase === "idle" ? "pointer" : "default",
         opacity: isDone ? 0 : 1,
-        transition: "opacity 300ms ease",
+        transition: "opacity 350ms ease",
         pointerEvents: isDone ? "none" : "auto",
       }}
     >
-      {/* Skip */}
+      {/* 3D Canvas */}
+      <Canvas
+        camera={{ position: [0, 6, 0.1], fov: 32, near: 0.1, far: 100 }}
+        gl={{ antialias: true }}
+        style={{ background: "transparent" }}
+      >
+        <Scene trigger={phase === "building" || phase === "loading" || phase === "done"} />
+      </Canvas>
+
+      {/* Skip button */}
       <button
         onClick={handleSkip}
         className="fixed top-6 right-6 z-30 text-white/10 hover:text-white/30 transition-colors font-mono uppercase text-[10px] tracking-[0.3em] px-3 py-1.5"
@@ -124,76 +219,8 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
         Skip
       </button>
 
-      {/* Logo build area */}
-      <div
-        className="relative"
-        style={{ width: 260, height: 160 }}
-      >
-        {/* When fused, show clean text logo on top of pieces */}
-        {isFused && (
-          <div className="absolute inset-0 flex items-end" style={{ gap: 0 }}>
-            <span
-              style={{
-                fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-                fontSize: 140,
-                fontWeight: 900,
-                lineHeight: 0.88,
-                color: "#e5e5e5",
-                letterSpacing: "-0.04em",
-              }}
-            >
-              N
-            </span>
-            <span
-              style={{
-                fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-                fontSize: 100,
-                fontWeight: 900,
-                lineHeight: 0.88,
-                color: "#22d3ee",
-                letterSpacing: "-0.04em",
-                marginLeft: -8,
-                marginBottom: 1,
-                transform: "rotate(-3deg)",
-                transformOrigin: "bottom left",
-              }}
-            >
-              C
-            </span>
-          </div>
-        )}
-
-        {/* Pieces layer - visible during idle and building, hidden once fused */}
-        {!isFused &&
-          PIECES.map((piece) => {
-            const landed = isBuilding
-            const tx = landed ? 0 : piece.startX
-            const ty = landed ? 0 : piece.startY
-
-            return (
-              <div
-                key={piece.id}
-                className="absolute"
-                style={{
-                  width: piece.w,
-                  height: piece.h,
-                  left: piece.x,
-                  top: piece.y,
-                  background: piece.color,
-                  borderRadius: 2,
-                  transform: `translate(${tx}px, ${ty}px)`,
-                  opacity: landed || phase === "idle" ? 1 : 1,
-                  transition: landed
-                    ? `transform 380ms cubic-bezier(0.22, 1, 0.36, 1) ${piece.delay}ms`
-                    : "none",
-                }}
-              />
-            )
-          })}
-      </div>
-
-      {/* Bottom: hint or loading bar */}
-      <div className="absolute bottom-14 flex flex-col items-center gap-3 z-20" style={{ minHeight: 36 }}>
+      {/* Bottom hint or loading bar */}
+      <div className="fixed bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20">
         {phase === "loading" ? (
           <>
             <div style={{ width: 160, height: 2, background: "#1a1a1a" }}>
@@ -206,11 +233,13 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
                 }}
               />
             </div>
-            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">Loading</span>
+            <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-white/20">
+              Loading
+            </span>
           </>
         ) : phase === "idle" ? (
           <span
-            className="text-[9px] font-mono tracking-[0.3em] uppercase transition-opacity duration-500 z-20"
+            className="text-[9px] font-mono tracking-[0.3em] uppercase transition-opacity duration-500"
             style={{ color: "rgba(255,255,255,0.15)", opacity: showHint ? 1 : 0 }}
           >
             Click to build
