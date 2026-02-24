@@ -2,9 +2,16 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
+import { Sun, Moon } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export function Navigation() {
   const pathname = usePathname()
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   const links = [
     { href: "/", label: "home" },
@@ -14,9 +21,9 @@ export function Navigation() {
   ]
 
   return (
-    <nav className="border-b border-dashed border-[#262626]">
+    <nav className="border-b border-dashed border-border">
       <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-        <span className="text-[#5eead4]/70 text-xs tracking-widest uppercase">
+        <span className="text-primary/70 text-xs tracking-widest uppercase">
           nc://sys
         </span>
 
@@ -29,15 +36,30 @@ export function Navigation() {
                 href={link.href}
                 className={`text-xs tracking-wider uppercase transition-colors ${
                   isActive
-                    ? "text-[#5eead4]"
-                    : "text-[#737373] hover:text-[#d4d4d4]"
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {isActive && <span className="text-[#5eead4] mr-1">{">"}</span>}
+                {isActive && <span className="text-primary mr-1">{">"}</span>}
                 {link.label}
               </Link>
             )
           })}
+
+          {/* Theme toggle */}
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="text-muted-foreground hover:text-primary transition-colors ml-2"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </button>
+          )}
         </div>
       </div>
     </nav>

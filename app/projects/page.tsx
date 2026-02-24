@@ -29,27 +29,27 @@ export default function ProjectsPage() {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-[#d4d4d4] tracking-tight">Projects</h1>
-        <div className="h-px bg-gradient-to-r from-[#5eead4]/30 to-transparent mb-10" />
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-foreground tracking-tight">Projects</h1>
+        <div className="h-px bg-gradient-to-r from-primary/30 to-transparent mb-10" />
 
         <div className="space-y-4">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="border border-dashed border-[#262626] p-5 hover:border-[#5eead4]/30 transition-colors"
+              className="border border-dashed border-border p-5 hover:border-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between mb-2">
-                <h3 className="text-sm font-bold text-[#d4d4d4]">{project.title}</h3>
-                <span className="text-[10px] text-[#737373] tracking-wider uppercase ml-4 shrink-0">
+                <h3 className="text-sm font-bold text-foreground">{project.title}</h3>
+                <span className="text-[10px] text-muted-foreground tracking-wider uppercase ml-4 shrink-0">
                   {project.year}
                 </span>
               </div>
-              <p className="text-xs leading-relaxed text-[#737373] mb-3">{project.description}</p>
+              <p className="text-xs leading-relaxed text-muted-foreground mb-3">{project.description}</p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 text-[10px] tracking-wider uppercase text-[#5eead4]/70 border border-[#5eead4]/20"
+                    className="px-2 py-0.5 text-[10px] tracking-wider uppercase text-primary/70 border border-primary/20"
                   >
                     {tag}
                   </span>

@@ -2,7 +2,16 @@
 
 import { useState, useEffect, useCallback, useRef } from "react"
 
-type Phase = "idle" | "username-label" | "username" | "password-label" | "password" | "auth" | "granted" | "done"
+type Phase =
+  | "idle"
+  | "username-label"
+  | "username"
+  | "password-label"
+  | "password"
+  | "auth"
+  | "granted"
+  | "welcome"
+  | "done"
 
 export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<Phase>("idle")
@@ -12,12 +21,12 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
   const [password, setPassword] = useState("")
   const [authDots, setAuthDots] = useState("")
   const [fadeOut, setFadeOut] = useState(false)
+  const [welcomeFade, setWelcomeFade] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const CHAR_SPEED = 90
   const LABEL_SPEED = 50
 
-  // Type a string character by character
   const typeText = useCallback(
     (
       text: string,
@@ -38,7 +47,6 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
     [],
   )
 
-  // Sequencer
   useEffect(() => {
     const delay = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
@@ -95,13 +103,26 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
 
     if (phase === "granted") {
       const t = setTimeout(() => {
+        setPhase("welcome")
+      }, 800)
+      return () => clearTimeout(t)
+    }
+
+    if (phase === "welcome") {
+      // Fade in the welcome text
+      const fadeInTimer = setTimeout(() => setWelcomeFade(true), 50)
+      // Hold, then fade out
+      const exitTimer = setTimeout(() => {
         setFadeOut(true)
         setTimeout(() => {
           setPhase("done")
           onComplete()
-        }, 500)
-      }, 800)
-      return () => clearTimeout(t)
+        }, 600)
+      }, 1200)
+      return () => {
+        clearTimeout(fadeInTimer)
+        clearTimeout(exitTimer)
+      }
     }
   }, [phase, typeText, onComplete])
 
@@ -120,7 +141,8 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
 
   if (phase === "done") return null
 
-  const showCursor = phase !== "auth" && phase !== "granted"
+  const showCursor = phase !== "auth" && phase !== "granted" && phase !== "welcome"
+  const isWelcome = phase === "welcome"
 
   return (
     <div
@@ -128,13 +150,13 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
       style={{
         background: "#050505",
         opacity: fadeOut ? 0 : 1,
-        transition: "opacity 500ms ease",
+        transition: "opacity 600ms ease",
       }}
     >
-      {/* Faint scanlines */}
+      {/* Scanlines */}
       <div className="scanlines fixed inset-0 z-10" />
 
-      {/* Skip button */}
+      {/* Skip */}
       <button
         onClick={handleSkip}
         className="fixed top-6 right-6 z-30 text-[#5eead4]/20 hover:text-[#5eead4]/50 transition-colors font-mono uppercase text-[10px] tracking-[0.3em] px-3 py-1.5"
@@ -142,51 +164,80 @@ export function TerminalIntro({ onComplete }: { onComplete: () => void }) {
         Skip
       </button>
 
-      {/* Terminal content */}
-      <div className="font-mono text-sm sm:text-base leading-relaxed z-20 max-w-lg px-8">
-        {/* Username line */}
-        {phase !== "idle" && (
-          <div className="flex">
-            <span className="text-[#5eead4]/60">{usernameLabel}</span>
-            <span className="text-[#d4d4d4]">{username}</span>
-            {showCursor && phase === "username" && (
-              <span className="text-[#5eead4] animate-pulse">_</span>
-            )}
-            {showCursor && phase === "username-label" && (
-              <span className="text-[#5eead4] animate-pulse">_</span>
-            )}
+      {/* Welcome screen */}
+      {isWelcome && (
+        <div
+          className="absolute inset-0 z-20 flex items-center justify-center"
+          style={{
+            opacity: welcomeFade ? 1 : 0,
+            transition: "opacity 400ms ease",
+          }}
+        >
+          <div className="text-center">
+            <h1 className="font-mono text-3xl sm:text-5xl font-bold tracking-tight text-[#d4d4d4]">
+              WELCOME, NEIL
+            </h1>
+            <div className="mt-4 mx-auto w-24 h-px bg-[#5eead4]/40" />
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Password line */}
-        {(phase === "password-label" || phase === "password" || phase === "auth" || phase === "granted") && (
-          <div className="flex mt-1">
-            <span className="text-[#5eead4]/60">{passwordLabel}</span>
-            <span className="text-[#d4d4d4]">{password}</span>
-            {showCursor && (phase === "password" || phase === "password-label") && (
-              <span className="text-[#5eead4] animate-pulse">_</span>
-            )}
-          </div>
-        )}
+      {/* Login terminal content */}
+      {!isWelcome && (
+        <div className="font-mono text-sm sm:text-base leading-relaxed z-20 max-w-lg px-8">
+          {phase !== "idle" && (
+            <div className="flex">
+              <span className="text-[#5eead4]/60">{usernameLabel}</span>
+              <span className="text-[#d4d4d4]">{username}</span>
+              {showCursor && (phase === "username" || phase === "username-label") && (
+                <span className="text-[#5eead4] animate-pulse">_</span>
+              )}
+            </div>
+          )}
 
-        {/* Authenticating */}
-        {(phase === "auth" || phase === "granted") && (
-          <div className="mt-4">
-            <span className="text-[#737373]">
-              {"AUTHENTICATING"}{authDots}
-            </span>
-          </div>
-        )}
+          {(phase === "password-label" || phase === "password" || phase === "auth" || phase === "granted") && (
+            <div className="flex mt-1">
+              <span className="text-[#5eead4]/60">{passwordLabel}</span>
+              <span className="text-[#d4d4d4]">{password}</span>
+              {showCursor && (phase === "password" || phase === "password-label") && (
+                <span className="text-[#5eead4] animate-pulse">_</span>
+              )}
+            </div>
+          )}
 
-        {/* Access granted */}
-        {phase === "granted" && (
-          <div className="mt-2">
-            <span className="text-[#5eead4] font-bold tracking-widest">
-              ACCESS GRANTED
-            </span>
-          </div>
-        )}
-      </div>
+          {(phase === "auth" || phase === "granted") && (
+            <div className="mt-4">
+              <span className="text-[#737373]">
+                {"AUTHENTICATING"}{authDots}
+              </span>
+            </div>
+          )}
+
+          {phase === "granted" && (
+            <div className="mt-2 relative">
+              <span className="text-[#5eead4] font-bold tracking-widest">
+                ACCESS GRANTED
+              </span>
+              {/* Subtle glitch line */}
+              <div
+                className="absolute left-0 right-0 h-px bg-[#5eead4]/30"
+                style={{
+                  top: "50%",
+                  animation: "glitch-line 0.3s ease-out forwards",
+                }}
+              />
+            </div>
+          )}
+        </div>
+      )}
+
+      <style>{`
+        @keyframes glitch-line {
+          0% { transform: scaleX(0); opacity: 1; }
+          50% { transform: scaleX(1.2); opacity: 0.6; }
+          100% { transform: scaleX(0); opacity: 0; }
+        }
+      `}</style>
     </div>
   )
 }

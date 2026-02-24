@@ -9,7 +9,7 @@ export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
-  const linkClass = "text-[#5eead4] hover:text-[#5eead4]/80 hover:underline underline-offset-4 decoration-dashed"
+  const linkClass = "text-primary hover:text-primary/80 hover:underline underline-offset-4 decoration-dashed"
 
   return (
     <div className="space-y-6 pb-32">
@@ -17,12 +17,12 @@ export function HomeContent() {
         <TextScramble
           text="Hi, I'm Neil!"
           as="h1"
-          className="text-2xl md:text-3xl font-bold text-[#d4d4d4] tracking-tight"
+          className="text-2xl md:text-3xl font-bold text-foreground tracking-tight"
         />
-        <div className="mt-2 h-px bg-gradient-to-r from-[#5eead4]/30 to-transparent" />
+        <div className="mt-2 h-px bg-gradient-to-r from-primary/30 to-transparent" />
       </div>
 
-      <p className="text-sm leading-relaxed text-[#a3a3a3]">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         I'm a student at{" "}
         <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Stanford
@@ -30,10 +30,10 @@ export function HomeContent() {
         .
       </p>
 
-      <p className="text-sm leading-relaxed text-[#a3a3a3]">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         Currently building{" "}
         <span
-          className="inline-block w-20 h-4 bg-[#262626] align-middle"
+          className="inline-block w-20 h-4 bg-border align-middle"
           aria-hidden="true"
         />{" "}
         and helping with growth for{" "}
@@ -43,7 +43,7 @@ export function HomeContent() {
         .
       </p>
 
-      <p className="text-sm leading-relaxed text-[#a3a3a3]">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         Before, I was the youngest intern at{" "}
         <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           YouGov
@@ -59,7 +59,7 @@ export function HomeContent() {
         as a Youth Advisor.
       </p>
 
-      <p className="text-sm leading-relaxed text-[#a3a3a3]">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         I have done AI, government, policy, and tech research at{" "}
         <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Hoover Institution
@@ -84,22 +84,22 @@ export function HomeContent() {
       </p>
 
       {/* Divider */}
-      <div className="border-t border-dashed border-[#262626] my-2" />
+      <div className="border-t border-dashed border-border my-2" />
 
       {/* Awards */}
       <div>
         <button
           onClick={() => setIsAwardsExpanded(!isAwardsExpanded)}
-          className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#d4d4d4] hover:text-[#5eead4] transition-colors"
+          className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground hover:text-primary transition-colors"
         >
-          <span className="text-[#5eead4]">{">"}</span>
+          <span className="text-primary">{">"}</span>
           Awards & Honors
           {isAwardsExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
         </button>
 
         {isAwardsExpanded && (
-          <div className="mt-4 pl-4 border-l border-dashed border-[#262626]">
-            <p className="text-sm leading-relaxed text-[#a3a3a3]">
+          <div className="mt-4 pl-4 border-l border-dashed border-border">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               <a
                 href="https://www.coca-colascholarsfoundation.org/"
                 target="_blank"
@@ -127,16 +127,16 @@ export function HomeContent() {
       <div>
         <button
           onClick={() => setIsFellowshipsExpanded(!isFellowshipsExpanded)}
-          className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#d4d4d4] hover:text-[#5eead4] transition-colors"
+          className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-foreground hover:text-primary transition-colors"
         >
-          <span className="text-[#5eead4]">{">"}</span>
+          <span className="text-primary">{">"}</span>
           Fellowships
           {isFellowshipsExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
         </button>
 
         {isFellowshipsExpanded && (
-          <div className="mt-4 pl-4 border-l border-dashed border-[#262626]">
-            <p className="text-sm leading-relaxed text-[#a3a3a3]">
+          <div className="mt-4 pl-4 border-l border-dashed border-border">
+            <p className="text-sm leading-relaxed text-muted-foreground">
               Hoover Student Fellow, Grata Private Equity Scholar
             </p>
           </div>
@@ -144,9 +144,9 @@ export function HomeContent() {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-dashed border-[#262626] my-2" />
+      <div className="border-t border-dashed border-border my-2" />
 
-      <p className="text-sm leading-relaxed text-[#a3a3a3]">
+      <p className="text-sm leading-relaxed text-muted-foreground">
         Reach out:{" "}
         <a href="mailto:neilchandran@stanford.edu" className={linkClass}>
           neilchandran@stanford.edu
@@ -155,15 +155,15 @@ export function HomeContent() {
       </p>
 
       <div className="flex items-center gap-4 text-xs uppercase tracking-wider pt-4">
-        <Link href="/projects" className="text-[#5eead4] hover:text-[#5eead4]/70 transition-colors">
+        <Link href="/projects" className="text-primary hover:text-primary/70 transition-colors">
           [projects]
         </Link>
-        <span className="text-[#262626]">|</span>
-        <Link href="/research" className="text-[#5eead4] hover:text-[#5eead4]/70 transition-colors">
+        <span className="text-border">|</span>
+        <Link href="/research" className="text-primary hover:text-primary/70 transition-colors">
           [research]
         </Link>
-        <span className="text-[#262626]">|</span>
-        <Link href="/hobbies" className="text-[#5eead4] hover:text-[#5eead4]/70 transition-colors">
+        <span className="text-border">|</span>
+        <Link href="/hobbies" className="text-primary hover:text-primary/70 transition-colors">
           [hobbies]
         </Link>
       </div>
@@ -173,7 +173,7 @@ export function HomeContent() {
           href="https://x.com/Ne1lChandran"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#737373] hover:text-[#5eead4] transition-colors"
+          className="text-muted-foreground hover:text-primary transition-colors"
           aria-label="X (Twitter)"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -184,7 +184,7 @@ export function HomeContent() {
           href="https://www.linkedin.com/in/neil-chandran-02aa69167/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#737373] hover:text-[#5eead4] transition-colors"
+          className="text-muted-foreground hover:text-primary transition-colors"
           aria-label="LinkedIn"
         >
           <Linkedin className="w-5 h-5" />
@@ -193,7 +193,7 @@ export function HomeContent() {
           href="https://github.com/NeilChandran"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#737373] hover:text-[#5eead4] transition-colors"
+          className="text-muted-foreground hover:text-primary transition-colors"
           aria-label="GitHub"
         >
           <Github className="w-5 h-5" />

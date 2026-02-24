@@ -40,33 +40,33 @@ export default function WorkPage() {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="max-w-3xl mx-auto px-6 py-12">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-[#d4d4d4] tracking-tight">Work Experience</h1>
-        <p className="text-xs text-[#737373] mb-2 tracking-wider uppercase">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-foreground tracking-tight">Work Experience</h1>
+        <p className="text-xs text-muted-foreground mb-2 tracking-wider uppercase">
           Professional experiences and internships throughout my journey.
         </p>
-        <div className="h-px bg-gradient-to-r from-[#5eead4]/30 to-transparent mb-10" />
+        <div className="h-px bg-gradient-to-r from-primary/30 to-transparent mb-10" />
 
         <div className="space-y-4">
           {experiences.map((exp, index) => (
             <div
               key={index}
-              className="border border-dashed border-[#262626] p-5 hover:border-[#5eead4]/30 transition-colors"
+              className="border border-dashed border-border p-5 hover:border-primary/30 transition-colors"
             >
               <div className="flex items-start justify-between mb-1">
                 <div>
-                  <h3 className="text-sm font-bold text-[#d4d4d4]">{exp.title}</h3>
-                  <p className="text-xs text-[#5eead4]/70 mt-0.5">{exp.company}</p>
+                  <h3 className="text-sm font-bold text-foreground">{exp.title}</h3>
+                  <p className="text-xs text-primary/70 mt-0.5">{exp.company}</p>
                 </div>
-                <span className="text-[10px] text-[#737373] tracking-wider uppercase whitespace-nowrap ml-4">
+                <span className="text-[10px] text-muted-foreground tracking-wider uppercase whitespace-nowrap ml-4">
                   {exp.period}
                 </span>
               </div>
-              <p className="text-xs leading-relaxed text-[#737373] mb-3 mt-2">{exp.description}</p>
+              <p className="text-xs leading-relaxed text-muted-foreground mb-3 mt-2">{exp.description}</p>
               <div className="flex flex-wrap gap-2">
                 {exp.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 text-[10px] tracking-wider uppercase text-[#5eead4]/70 border border-[#5eead4]/20"
+                    className="px-2 py-0.5 text-[10px] tracking-wider uppercase text-primary/70 border border-primary/20"
                   >
                     {tag}
                   </span>
