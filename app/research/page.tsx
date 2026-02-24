@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation"
+import { Card } from "@/components/ui/card"
 
 const projects = [
   {
@@ -27,37 +28,23 @@ export default function ResearchPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="max-w-3xl mx-auto px-6 py-12">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-foreground tracking-tight">Research</h1>
-        <div className="h-px bg-gradient-to-r from-primary/30 to-transparent mb-10" />
+      <main className="max-w-4xl mx-auto px-6 py-12">
+        <h1 className="text-4xl md:text-5xl font-bold mb-12 text-balance">Research</h1>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {projects.map((project, index) => (
-            <div
-              key={index}
-              className="border border-dashed border-border p-5 hover:border-primary/30 transition-colors"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="text-sm font-bold text-foreground">{project.title}</h3>
-                <span className="text-[10px] text-muted-foreground tracking-wider uppercase ml-4 shrink-0">
-                  {project.year}
-                </span>
-              </div>
-              <p className="text-xs leading-relaxed text-muted-foreground mb-3">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
+            <Card key={index} className="p-6 hover:border-primary/50 transition-colors">
+              <h3 className="text-xl font-bold mb-3">{project.title}</h3>
+              <p className="text-muted-foreground mb-4">{project.description}</p>
+              <div className="text-sm">
                 {project.tags.map((tag, idx) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] tracking-wider uppercase text-primary/70"
-                  >
-                    {tag}
-                    {idx < project.tags.length - 1 && (
-                      <span className="text-border ml-2">{"/"}</span>
-                    )}
+                  <span key={tag}>
+                    <span className="text-blue-400">{tag}</span>
+                    {idx < project.tags.length - 1 && <span className="text-muted-foreground"> • </span>}
                   </span>
                 ))}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </main>

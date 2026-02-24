@@ -12,7 +12,7 @@ export default function Page() {
 
   useEffect(() => {
     setMounted(true)
-    const hasSeenIntro = localStorage.getItem("hasSeenIntro")
+    const hasSeenIntro = sessionStorage.getItem("hasSeenIntro")
     if (!hasSeenIntro) {
       setShowIntro(true)
     }
@@ -20,7 +20,7 @@ export default function Page() {
 
   const handleIntroComplete = () => {
     setShowIntro(false)
-    localStorage.setItem("hasSeenIntro", "true")
+    sessionStorage.setItem("hasSeenIntro", "true")
   }
 
   if (!mounted) return null
@@ -30,11 +30,11 @@ export default function Page() {
       {showIntro && <TerminalIntro onComplete={handleIntroComplete} />}
       <div
         className={`min-h-screen bg-background transition-all duration-500 ${
-          showIntro ? "opacity-0" : "opacity-100"
+          showIntro ? "opacity-0 scale-95" : "opacity-100 scale-100"
         }`}
       >
         <Navigation />
-        <main className="max-w-3xl mx-auto px-6 py-12">
+        <main className="max-w-4xl mx-auto px-6 py-12">
           <HomeContent />
         </main>
         <VisitorCounter />
