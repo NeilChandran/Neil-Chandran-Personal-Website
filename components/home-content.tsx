@@ -1,16 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronUp, ChevronDown } from "lucide-react"
+import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
-import { Linkedin } from "lucide-react"
 import { TextScramble } from "./text-scramble"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
-  const linkClass = "text-[#2563EB] dark:text-[#60A5FA] hover:underline font-semibold"
+  const linkClass = "hover:underline font-semibold"
+  const linkStyle = { color: "var(--link-color)" }
 
   return (
     <div className="space-y-8 pb-32">
@@ -18,7 +18,7 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         I'm a student at{" "}
-        <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Stanford
         </a>
         .
@@ -31,7 +31,7 @@ export function HomeContent() {
           aria-hidden="true"
         />{" "}
         and helping with growth for{" "}
-        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Perplexity
         </a>
         .
@@ -39,15 +39,15 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         Before, I was the youngest intern at{" "}
-        <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           YouGov
         </a>
         , scouted for{" "}
-        <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Afore Capital
         </a>{" "}
         ($500M AUM), and worked with the{" "}
-        <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           United Nations
         </a>{" "}
         as a Youth Advisor.
@@ -55,23 +55,23 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at{" "}
-        <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Hoover Institution
         </a>
         ,{" "}
-        <a href="https://hsph.harvard.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://hsph.harvard.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Harvard T.H. Chan School of Public Health
         </a>
         ,{" "}
-        <a href="https://www.ucsc.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://www.ucsc.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           UC Santa Cruz
         </a>
         , and{" "}
-        <a href="https://fsi.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://fsi.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Stanford FSI
         </a>{" "}
         in partnership with{" "}
-        <a href="https://about.meta.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="https://about.meta.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Meta
         </a>
         .
@@ -94,15 +94,16 @@ export function HomeContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={linkClass}
+                style={linkStyle}
               >
                 Coca-Cola Scholar
               </a>
               ,{" "}
-              <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+              <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
                 TreeHacks Winner: Sustainability Track
               </a>
               ,{" "}
-              <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
+              <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
                 USACO Gold
               </a>
               , U.S. President&apos;s Lifetime Achievement Award (White House Issued), MIT Solve Global Challenge
@@ -132,22 +133,22 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed pt-4">
         Reach out:{" "}
-        <a href="mailto:neilchandran@stanford.edu" className={linkClass}>
+        <a href="mailto:neilchandran@stanford.edu" className={linkClass} style={linkStyle}>
           neilchandran@stanford.edu
         </a>
         .
       </p>
 
       <div className="flex items-center gap-3 text-lg pt-8">
-        <Link href="/projects" className={linkClass}>
+        <Link href="/projects" className={linkClass} style={linkStyle}>
           Projects
         </Link>
         <span className="text-foreground/50">•</span>
-        <Link href="/research" className={linkClass}>
+        <Link href="/research" className={linkClass} style={linkStyle}>
           Research
         </Link>
         <span className="text-foreground/50">•</span>
-        <Link href="/hobbies" className={linkClass}>
+        <Link href="/hobbies" className={linkClass} style={linkStyle}>
           Hobbies
         </Link>
       </div>
@@ -172,6 +173,15 @@ export function HomeContent() {
           aria-label="LinkedIn"
         >
           <Linkedin className="w-6 h-6" />
+        </a>
+        <a
+          href="https://github.com/NeilChandran"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-foreground/70 hover:text-foreground transition-colors"
+          aria-label="GitHub"
+        >
+          <Github className="w-6 h-6" />
         </a>
       </div>
     </div>
