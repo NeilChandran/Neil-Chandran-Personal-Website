@@ -1,7 +1,32 @@
 import { Navigation } from "@/components/navigation"
 import { Card } from "@/components/ui/card"
+import { ExternalLink } from "lucide-react"
 
 const projects = [
+  {
+    title: "GridVeda - Edge AI Infrastructure Intelligence",
+    description:
+      "Edge-deployed AI system for early detection of electrical transformer failures, running fully on-site without cloud dependency. Physics-informed ML pipelines monitor and classify faults across 20+ transformers in real-time with GPU-accelerated inference on NVIDIA hardware.",
+    tags: ["Edge AI", "Hackathon"],
+    year: "2026",
+    badge: "TreeHacks Winner",
+    link: "https://devpost.com/software/gridveda",
+  },
+  {
+    title: "OutsideConnection - Reentry Employment Platform",
+    description:
+      "Web-based employment platform connecting over 10,000 formerly incarcerated individuals across all 50 states with inclusive job opportunities. AI-powered job matching with state/city filtering. Partnered with US DOJ, Taco Bell, Prudential Financial, and reentry organizations; raised $50,000.",
+    tags: ["Next.js", "AI", "Social Impact"],
+    year: "2025",
+  },
+  {
+    title: "Prometheus",
+    description:
+      "AI-powered O-1 visa application platform helping extraordinary individuals navigate immigration.",
+    tags: ["AI", "Immigration"],
+    year: "2025",
+    link: "https://devpost.com/software/prometheus-cpw2sl",
+  },
   {
     title: "CalABLE – California State Treasurer's Office",
     description:
@@ -32,22 +57,51 @@ export default function ProjectsPage() {
       <main className="max-w-4xl mx-auto px-6 py-12">
         <h1 className="text-4xl md:text-5xl font-bold mb-12 text-balance">Projects</h1>
 
-        <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
-            <Card key={index} className="p-6 hover:border-primary/50 transition-colors">
+            <Card key={index} className="p-6 hover:border-primary/50 transition-colors flex flex-col">
               <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-1">{project.year}</p>
+                <div className="flex items-center gap-3 flex-wrap">
+                  {project.badge && (
+                    <span className="px-3 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full">
+                      {project.badge}
+                    </span>
+                  )}
+                  <span className="text-sm text-muted-foreground">{project.year}</span>
                 </div>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label="External link"
+                  >
+                    <ExternalLink className="w-5 h-5" />
+                  </a>
+                )}
               </div>
-              <p className="text-muted-foreground mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
-                    {tag}
-                  </span>
-                ))}
+              <h3 className="text-xl font-bold mb-3">{project.title}</h3>
+              <p className="text-muted-foreground mb-4 flex-1">{project.description}</p>
+              <div className="flex items-center justify-between mt-auto">
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag, i) => (
+                    <span key={tag} className="text-sm" style={{ color: "var(--link-color)" }}>
+                      {tag}{i < project.tags.length - 1 && <span className="mx-1">•</span>}
+                    </span>
+                  ))}
+                </div>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium flex items-center gap-1 hover:underline"
+                    style={{ color: "var(--link-color)" }}
+                  >
+                    Visit Project <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </div>
             </Card>
           ))}

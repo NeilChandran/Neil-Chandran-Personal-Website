@@ -38,6 +38,7 @@ export function Navigation() {
       localStorage.setItem("theme", "light")
     }
     setIsDark(newIsDark)
+    // If switching to green in dark mode, also set the foreground CSS var
     const color = accentColors.find((c) => c.name === activeColor) || accentColors[0]
     document.documentElement.style.setProperty("--link-color", newIsDark ? color.dark : color.light)
   }
