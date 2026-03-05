@@ -19,14 +19,7 @@ const projects = [
     tags: ["Next.js", "AI", "Social Impact"],
     year: "2025",
   },
-  {
-    title: "Prometheus",
-    description:
-      "AI-powered O-1 visa application platform helping extraordinary individuals navigate immigration.",
-    tags: ["AI", "Immigration"],
-    year: "2025",
-    link: "https://devpost.com/software/prometheus-cpw2sl",
-  },
+
   {
     title: "CalABLE – California State Treasurer's Office",
     description:
