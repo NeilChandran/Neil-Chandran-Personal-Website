@@ -13,13 +13,11 @@ const projects = [
     link: "https://devpost.com/software/gridveda",
   },
   {
-    title: "PUSHPA - Pyro UAV System",
+    title: "OutsideConnection - Reentry Employment Platform",
     description:
-      "Smart glasses-controlled drone system for wildfire response with 20x optimized edge compute. Real-time hazard detection without Wi-Fi connectivity for first responders.",
-    tags: ["Edge AI", "Hackathon"],
+      "Web-based employment platform connecting over 10,000 formerly incarcerated individuals across all 50 states with inclusive job opportunities. AI-powered job matching with state/city filtering. Partnered with US DOJ, Taco Bell, Prudential Financial, and reentry organizations; raised $50,000.",
+    tags: ["Next.js", "AI", "Social Impact"],
     year: "2025",
-    badge: "TreeHacks Winner",
-    link: "https://devpost.com/software/pushpa-pyro-uav-system-for-hazard-prevention-assistance",
   },
   {
     title: "Prometheus",
