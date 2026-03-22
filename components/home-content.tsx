@@ -224,11 +224,11 @@ export function HomeContent() {
                 </a>
                 ,{" "}
                 <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
-                  TreeHacks Winner: Sustainability Track
+                  TreeHacks 1st Place Winner: Sustainability Track
                 </a>
                 ,{" "}
                 <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
-                  USACO Gold
+                  USA Computing Olympiad Gold
                 </a>
                 , U.S. President&apos;s Lifetime Achievement Award (White House Issued), MIT Solve Global Challenge
                 Finalist (1%), U.S. Presidential Scholar Semifinalist, Hershey&apos;s Grant Recipient

@@ -9,7 +9,7 @@ const projects = [
       "Edge-deployed AI system for early detection of electrical transformer failures, running fully on-site without cloud dependency. Physics-informed ML pipelines monitor and classify faults across 20+ transformers in real-time with GPU-accelerated inference on NVIDIA hardware.",
     tags: ["Edge AI", "Hackathon"],
     year: "2026",
-    badge: "TreeHacks Winner",
+    badge: "TreeHacks 1st Place Winner",
     link: "https://devpost.com/software/gridveda",
   },
   {
