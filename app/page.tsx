@@ -9,134 +9,38 @@ import { TerminalIntro } from "@/components/terminal-intro"
 
 function StanfordMarquee() {
   // Create logo items for seamless infinite scroll
-  const logos = Array.from({ length: 20 })
+  const logos = Array.from({ length: 15 })
   
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {/* Multiple rows of scrolling logos */}
-      <div className="absolute inset-0 flex flex-col justify-around py-8">
-        {/* Row 1 - scrolling left */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee-left">
-            {logos.map((_, i) => (
-              <div key={`r1a-${i}`} className="flex-shrink-0 mx-12">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={120}
-                  height={40}
-                  className="opacity-[0.06] dark:opacity-[0.08]"
-                  aria-hidden="true"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex animate-marquee-left" aria-hidden="true">
-            {logos.map((_, i) => (
-              <div key={`r1b-${i}`} className="flex-shrink-0 mx-12">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={120}
-                  height={40}
-                  className="opacity-[0.06] dark:opacity-[0.08]"
-                />
-              </div>
-            ))}
-          </div>
+    <div className="fixed top-0 left-0 right-0 pointer-events-none overflow-hidden z-0 h-20">
+      {/* Single row scrolling horizontally */}
+      <div className="relative flex overflow-hidden h-full items-center">
+        <div className="flex animate-marquee-left whitespace-nowrap">
+          {logos.map((_, i) => (
+            <div key={`a-${i}`} className="flex-shrink-0 mx-8">
+              <Image
+                src="/stanford-logo.png"
+                alt=""
+                width={150}
+                height={50}
+                className="opacity-[0.08] dark:opacity-[0.12]"
+                aria-hidden="true"
+              />
+            </div>
+          ))}
         </div>
-        
-        {/* Row 2 - scrolling right */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee-right">
-            {logos.map((_, i) => (
-              <div key={`r2a-${i}`} className="flex-shrink-0 mx-12">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={100}
-                  height={33}
-                  className="opacity-[0.05] dark:opacity-[0.07]"
-                  aria-hidden="true"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex animate-marquee-right" aria-hidden="true">
-            {logos.map((_, i) => (
-              <div key={`r2b-${i}`} className="flex-shrink-0 mx-12">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={100}
-                  height={33}
-                  className="opacity-[0.05] dark:opacity-[0.07]"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Row 3 - scrolling left slower */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee-left-slow">
-            {logos.map((_, i) => (
-              <div key={`r3a-${i}`} className="flex-shrink-0 mx-14">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={140}
-                  height={47}
-                  className="opacity-[0.055] dark:opacity-[0.075]"
-                  aria-hidden="true"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex animate-marquee-left-slow" aria-hidden="true">
-            {logos.map((_, i) => (
-              <div key={`r3b-${i}`} className="flex-shrink-0 mx-14">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={140}
-                  height={47}
-                  className="opacity-[0.055] dark:opacity-[0.075]"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Row 4 - scrolling right slower */}
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee-right-slow">
-            {logos.map((_, i) => (
-              <div key={`r4a-${i}`} className="flex-shrink-0 mx-10">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={110}
-                  height={37}
-                  className="opacity-[0.045] dark:opacity-[0.065]"
-                  aria-hidden="true"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex animate-marquee-right-slow" aria-hidden="true">
-            {logos.map((_, i) => (
-              <div key={`r4b-${i}`} className="flex-shrink-0 mx-10">
-                <Image
-                  src="/stanford-logo.png"
-                  alt=""
-                  width={110}
-                  height={37}
-                  className="opacity-[0.045] dark:opacity-[0.065]"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="flex animate-marquee-left whitespace-nowrap" aria-hidden="true">
+          {logos.map((_, i) => (
+            <div key={`b-${i}`} className="flex-shrink-0 mx-8">
+              <Image
+                src="/stanford-logo.png"
+                alt=""
+                width={150}
+                height={50}
+                className="opacity-[0.08] dark:opacity-[0.12]"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()"
 
@@ -118,10 +119,22 @@ export function HomeContent() {
   return (
     <div className="space-y-8 pb-32">
       {/* Line 1: Hi, I'm Neil! -- typewriter */}
-      <h1 className="text-4xl md:text-5xl font-bold text-balance">
-        {line1.displayed}
-        {!line1.done && <span className="animate-pulse">|</span>}
-      </h1>
+      <div className="flex items-center gap-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-balance">
+          {line1.displayed}
+          {!line1.done && <span className="animate-pulse">|</span>}
+        </h1>
+        {line1.done && (
+          <Image
+            src="/dog.gif"
+            alt="Animated dog"
+            width={60}
+            height={60}
+            className="object-contain"
+            unoptimized
+          />
+        )}
+      </div>
 
       {/* Line 2: I'm a student at Stanford -- typewriter */}
       {line1.done && (
