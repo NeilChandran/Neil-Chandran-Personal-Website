@@ -28,7 +28,7 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --link-color: #2563EB;
+  --link-color: #8C1515;
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
@@ -124,5 +124,57 @@
   body {
     @apply bg-background text-foreground;
   }
+}
 
+/* Stanford slider animations */
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-right-slow {
+  0% {
+    transform: translateX(-80%);
+  }
+  100% {
+    transform: translateX(80%);
+  }
+}
+
+@keyframes slide-left-slow {
+  0% {
+    transform: translateX(80%);
+  }
+  100% {
+    transform: translateX(-80%);
+  }
+}
+
+.animate-slide-right {
+  animation: slide-right 30s linear infinite;
+}
+
+.animate-slide-left {
+  animation: slide-left 25s linear infinite;
+}
+
+.animate-slide-right-slow {
+  animation: slide-right-slow 40s linear infinite;
+}
+
+.animate-slide-left-slow {
+  animation: slide-left-slow 35s linear infinite;
 }
