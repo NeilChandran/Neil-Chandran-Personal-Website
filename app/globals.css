@@ -126,55 +126,37 @@
   }
 }
 
-/* Stanford slider animations */
-@keyframes slide-right {
+/* Stanford marquee animations - seamless infinite scroll */
+@keyframes marquee-left {
   0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slide-left {
-  0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
   }
 }
 
-@keyframes slide-right-slow {
+@keyframes marquee-right {
   0% {
-    transform: translateX(-80%);
+    transform: translateX(-100%);
   }
   100% {
-    transform: translateX(80%);
+    transform: translateX(0);
   }
 }
 
-@keyframes slide-left-slow {
-  0% {
-    transform: translateX(80%);
-  }
-  100% {
-    transform: translateX(-80%);
-  }
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite;
 }
 
-.animate-slide-right {
-  animation: slide-right 30s linear infinite;
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
 }
 
-.animate-slide-left {
-  animation: slide-left 25s linear infinite;
+.animate-marquee-left-slow {
+  animation: marquee-left 55s linear infinite;
 }
 
-.animate-slide-right-slow {
-  animation: slide-right-slow 40s linear infinite;
-}
-
-.animate-slide-left-slow {
-  animation: slide-left-slow 35s linear infinite;
+.animate-marquee-right-slow {
+  animation: marquee-right 50s linear infinite;
 }
