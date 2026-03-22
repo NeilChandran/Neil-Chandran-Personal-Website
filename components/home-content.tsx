@@ -224,7 +224,7 @@ export function HomeContent() {
                 </a>
                 ,{" "}
                 <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
-                  TreeHacks Winner: Sustainability Track
+                  TreeHacks 1st Place Winner: Sustainability Track
                 </a>
                 ,{" "}
                 <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
