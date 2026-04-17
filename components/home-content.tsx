@@ -242,14 +242,17 @@ export function HomeContent() {
             onClick={() => setIsFellowshipsExpanded(!isFellowshipsExpanded)}
             className="flex items-center gap-2 text-lg font-semibold hover:text-foreground/80 transition-colors"
           >
-            Fellowships
+            Technical Fellowships
             {isFellowshipsExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronUp className="w-5 h-5" />}
           </button>
 
           {isFellowshipsExpanded && (
             <div className="mt-6 pl-6">
               <p className="text-lg leading-relaxed text-foreground/90">
-                Hoover Student Fellow
+                <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
+                  Z Fellow
+                </a>
+                , Grata Scholar, Hoover Student Fellow
               </p>
             </div>
           )}
