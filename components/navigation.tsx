@@ -61,7 +61,7 @@ export function Navigation() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleThemeToggle}
-            className="p-2 hover:bg-muted rounded-lg transition-colors"
+            className="p-2 hover:bg-muted rounded-lg"
             aria-label="Toggle theme"
           >
             {isDark ? <Sun className="w-5 h-5 text-foreground" /> : <Moon className="w-5 h-5 text-foreground" />}
@@ -72,10 +72,10 @@ export function Navigation() {
               <button
                 key={color.name}
                 onClick={() => handleColorChange(color.name)}
-                className={`w-5 h-5 rounded-full transition-all ${
+                className={`w-5 h-5 rounded-full ${
                   activeColor === color.name
                     ? "ring-2 ring-offset-2 ring-foreground/50 ring-offset-background"
-                    : "hover:scale-110"
+                    : ""
                 }`}
                 style={{ backgroundColor: isDark ? color.dark : color.light }}
                 aria-label={`Set accent color to ${color.name}`}
@@ -85,16 +85,16 @@ export function Navigation() {
         </div>
 
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-foreground hover:text-foreground/80 transition-colors text-sm">
+          <Link href="/" className="text-foreground hover:text-foreground/80 text-sm">
             Home
           </Link>
-          <Link href="/projects" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
+          <Link href="/projects" className="text-foreground/70 hover:text-foreground text-sm">
             Projects
           </Link>
-          <Link href="/research" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
+          <Link href="/research" className="text-foreground/70 hover:text-foreground text-sm">
             Research
           </Link>
-          <Link href="/hobbies" className="text-foreground/70 hover:text-foreground transition-colors text-sm">
+          <Link href="/hobbies" className="text-foreground/70 hover:text-foreground text-sm">
             Hobbies
           </Link>
         </div>
