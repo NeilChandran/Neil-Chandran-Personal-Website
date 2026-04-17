@@ -249,7 +249,7 @@ export function HomeContent() {
           {isFellowshipsExpanded && (
             <div className="mt-6 pl-6">
               <p className="text-lg leading-relaxed text-foreground/90">
-                Hoover Student Fellow, Grata Private Equity Scholar
+                Hoover Student Fellow
               </p>
             </div>
           )}
