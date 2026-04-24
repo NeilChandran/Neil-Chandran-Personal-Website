@@ -15,7 +15,7 @@ const accentColors = [
 export function Navigation() {
   const pathname = usePathname()
   const isHomePage = pathname === "/"
-  const [isDark, setIsDark] = useState(true)
+  const [isDark, setIsDark] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [activeColor, setActiveColor] = useState("Blue")
 
