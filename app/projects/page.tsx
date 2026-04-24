@@ -1,45 +1,38 @@
 import { Navigation } from "@/components/navigation"
-import { Card } from "@/components/ui/card"
 import { ExternalLink } from "lucide-react"
 
 const projects = [
   {
     title: "GridVeda - Edge AI Infrastructure Intelligence",
-    description:
-      "Edge-deployed AI system for early detection of electrical transformer failures, running fully on-site without cloud dependency. Physics-informed ML pipelines monitor and classify faults across 20+ transformers in real-time with GPU-accelerated inference on NVIDIA hardware.",
+    timeline: "2026",
+    description: "Edge-deployed AI system for early detection of electrical transformer failures",
     tags: ["Edge AI", "Hackathon"],
-    year: "2026",
     badge: "TreeHacks 1st Place Winner",
     link: "https://devpost.com/software/gridveda",
   },
   {
     title: "OutsideConnection - Reentry Employment Platform",
-    description:
-      "Web-based employment platform connecting over 10,000 formerly incarcerated individuals across all 50 states with inclusive job opportunities. AI-powered job matching with state/city filtering. Partnered with US DOJ, Taco Bell, Prudential Financial, and reentry organizations; raised $50,000.",
+    timeline: "2025",
+    description: "Employment platform connecting 10,000+ formerly incarcerated individuals with jobs",
     tags: ["Next.js", "AI", "Social Impact"],
-    year: "2025",
-  },
-
-  {
-    title: "CalABLE – California State Treasurer's Office",
-    description:
-      "Automated financial reporting processes for CalABLE savings program using Excel macros and Python scripts. Developed visual summaries & slidedecks for CA State Treasurer Ma.",
-    tags: ["Python", "Excel", "Automation"],
-    year: "2024",
-  },
-  {
-    title: "Smile Train VR Self-Care Game",
-    description:
-      "Designed and developed Unity-based VR self-care games for Smile Train, tailored for thousands of children with cleft conditions and disabilities, integrating adaptive design principles for therapeutic accessibility.",
-    tags: ["Unity", "C#", "VR", "Healthcare"],
-    year: "2022-2024",
   },
   {
     title: "NeuroBridge - Job Platform for Neurodiversity",
-    description:
-      "Creating an inclusive employment platform connecting neurodivergent individuals with accommodating employers, featuring AI-powered job matching and workplace accessibility assessments.",
+    timeline: "2025",
+    description: "Inclusive employment platform for neurodivergent individuals with AI job matching",
     tags: ["Python", "AI", "Social Impact"],
-    year: "2025",
+  },
+  {
+    title: "CalABLE – California State Treasurer's Office",
+    timeline: "2024",
+    description: "Automated financial reporting for CalABLE savings program",
+    tags: ["Python", "Excel", "Automation"],
+  },
+  {
+    title: "Smile Train VR Self-Care Game",
+    timeline: "2022 - 2024",
+    description: "Unity-based VR self-care games for children with cleft conditions",
+    tags: ["Unity", "C#", "VR", "Healthcare"],
   },
 ]
 
@@ -47,57 +40,62 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-12 text-balance">Projects</h1>
+      <main className="max-w-2xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-serif font-bold mb-8">Projects</h1>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <Card key={index} className="p-6 hover:border-primary/50 transition-colors flex flex-col">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  {project.badge && (
-                    <span className="px-3 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full">
-                      {project.badge}
-                    </span>
-                  )}
-                  <span className="text-sm text-muted-foreground">{project.year}</span>
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-[72px] top-0 bottom-0 w-px bg-border" />
+
+          <div className="space-y-6">
+            {projects.map((project, index) => (
+              <div key={index} className="flex items-start gap-6">
+                {/* Year */}
+                <div className="w-[60px] text-sm text-muted-foreground font-mono text-right shrink-0">
+                  {project.timeline.split(" - ")[0]}
                 </div>
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label="External link"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </a>
-                )}
-              </div>
-              <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-              <p className="text-muted-foreground mb-4 flex-1">{project.description}</p>
-              <div className="flex items-center justify-between mt-auto">
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, i) => (
-                    <span key={tag} className="text-sm" style={{ color: "var(--link-color)" }}>
-                      {tag}{i < project.tags.length - 1 && <span className="mx-1">•</span>}
-                    </span>
-                  ))}
+
+                {/* Timeline dot */}
+                <div className="relative shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-accent-color border-2 border-background ring-2 ring-border" />
                 </div>
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium flex items-center gap-1 hover:underline"
-                    style={{ color: "var(--link-color)" }}
-                  >
-                    Visit Project <span aria-hidden="true">→</span>
-                  </a>
-                )}
+
+                {/* Content */}
+                <div className="pb-2 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="font-semibold text-foreground">{project.title}</h3>
+                      {project.badge && (
+                        <span className="inline-block px-2 py-0.5 text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-full mt-1">
+                          {project.badge}
+                        </span>
+                      )}
+                    </div>
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground shrink-0"
+                        aria-label="External link"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                  <div className="flex flex-wrap gap-x-2 mt-1">
+                    {project.tags.map((tag, idx) => (
+                      <span key={tag} className="text-xs" style={{ color: "var(--link-color)" }}>
+                        {tag}{idx < project.tags.length - 1 && " •"}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground/60 mt-1">{project.timeline}</p>
+                </div>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
       </main>
     </div>
