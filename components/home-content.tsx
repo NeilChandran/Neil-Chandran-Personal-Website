@@ -8,7 +8,7 @@ export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
-  const linkClass = "underline decoration-1 underline-offset-2"
+  const linkClass = "font-semibold no-underline"
   const linkStyle = { color: "var(--link-color)" }
 
   return (
