@@ -28,9 +28,9 @@ export function HomeContent() {
       <p className="text-lg leading-relaxed">
         Currently building{" "}
         <span
-          className="inline-block w-20 h-4 rounded bg-muted align-middle"
+          className="inline-block align-middle select-none blur-sm text-foreground/70"
           aria-hidden="true"
-        />{" "}
+        >something</span>{" "}
         and helping with growth for{" "}
         <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} style={linkStyle}>
           Perplexity
