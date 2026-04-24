@@ -1,20 +1,30 @@
 import { Navigation } from "@/components/navigation"
-import { Card } from "@/components/ui/card"
 
 const hobbies = [
   {
     title: "Tennis",
     timeline: "2015 - Present",
-    image: "/tennis-racquet.jpg",
     description: "4 Years Varsity, Served as Captain",
-    gradient: "from-green-500/20 to-emerald-500/20",
   },
   {
     title: "Spanish Classical Guitar",
     timeline: "2014 - Present",
-    image: "/classical-guitar.jpg",
     description: "",
-    gradient: "from-blue-500/20 to-cyan-500/20",
+  },
+  {
+    title: "Poker",
+    timeline: "2025 - Present",
+    description: "",
+  },
+  {
+    title: "Pool",
+    timeline: "2026 - Present",
+    description: "",
+  },
+  {
+    title: "Pickleball",
+    timeline: "2024 - Present",
+    description: "",
   },
 ]
 
@@ -22,23 +32,37 @@ export default function HobbiesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="max-w-4xl mx-auto px-6 py-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3 text-balance">Hobbies & Interests</h1>
-        <p className="text-lg text-muted-foreground mb-12 text-pretty">What I enjoy doing outside of academics.</p>
+      <main className="max-w-2xl mx-auto px-6 py-8">
+        <h1 className="text-3xl font-serif font-bold mb-8">Hobbies</h1>
 
-        <div className="grid grid-cols-1 gap-6">
-          {hobbies.map((hobby, index) => (
-            <Card key={index} className={`p-8 bg-gradient-to-br ${hobby.gradient} border-border/50`}>
-              <div className="mb-6 rounded-xl overflow-hidden">
-                <img src={hobby.image || "/placeholder.svg"} alt={hobby.title} className="w-full h-64 object-cover" />
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-[72px] top-0 bottom-0 w-px bg-border" />
+
+          <div className="space-y-6">
+            {hobbies.map((hobby, index) => (
+              <div key={index} className="flex items-start gap-6">
+                {/* Year */}
+                <div className="w-[60px] text-sm text-muted-foreground font-mono text-right shrink-0">
+                  {hobby.timeline.split(" - ")[0]}
+                </div>
+
+                {/* Timeline dot */}
+                <div className="relative shrink-0">
+                  <div className="w-3 h-3 rounded-full bg-accent-color border-2 border-background ring-2 ring-border" />
+                </div>
+
+                {/* Content */}
+                <div className="pb-2">
+                  <h3 className="font-semibold text-foreground">{hobby.title}</h3>
+                  {hobby.description && (
+                    <p className="text-sm text-muted-foreground mt-0.5">{hobby.description}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground/60 mt-1">{hobby.timeline}</p>
+                </div>
               </div>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-2xl font-bold">{hobby.title}</h3>
-                <span className="text-sm text-muted-foreground font-medium">{hobby.timeline}</span>
-              </div>
-              <p className="text-muted-foreground text-lg">{hobby.description}</p>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
       </main>
     </div>
