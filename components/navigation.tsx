@@ -1,8 +1,9 @@
 "use client"
 
-import Link from "next/link"
 import { Sun, Moon } from "lucide-react"
 import { useEffect, useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const accentColors = [
   { name: "Blue", light: "#2563EB", dark: "#60A5FA" },
@@ -12,6 +13,8 @@ const accentColors = [
 ]
 
 export function Navigation() {
+  const pathname = usePathname()
+  const isHomePage = pathname === "/"
   const [isDark, setIsDark] = useState(true)
   const [mounted, setMounted] = useState(false)
   const [activeColor, setActiveColor] = useState("Blue")
@@ -38,7 +41,6 @@ export function Navigation() {
       localStorage.setItem("theme", "light")
     }
     setIsDark(newIsDark)
-    // If switching to green in dark mode, also set the foreground CSS var
     const color = accentColors.find((c) => c.name === activeColor) || accentColors[0]
     document.documentElement.style.setProperty("--link-color", newIsDark ? color.dark : color.light)
   }
@@ -56,25 +58,34 @@ export function Navigation() {
   }
 
   return (
-    <nav className="border-b border-border/40">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleThemeToggle}
-            className="p-2 hover:bg-muted rounded-lg"
-            aria-label="Toggle theme"
-          >
-            {isDark ? <Sun className="w-5 h-5 text-foreground" /> : <Moon className="w-5 h-5 text-foreground" />}
-          </button>
+    <nav className="py-6">
+      <div className="max-w-2xl mx-auto px-6 flex items-center justify-between">
+        {!isHomePage && (
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-foreground/70 hover:text-foreground text-sm">
+              Home
+            </Link>
+            <Link href="/projects" className="text-foreground/70 hover:text-foreground text-sm">
+              Projects
+            </Link>
+            <Link href="/research" className="text-foreground/70 hover:text-foreground text-sm">
+              Research
+            </Link>
+            <Link href="/hobbies" className="text-foreground/70 hover:text-foreground text-sm">
+              Hobbies
+            </Link>
+          </div>
+        )}
 
+        <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             {accentColors.map((color) => (
               <button
                 key={color.name}
                 onClick={() => handleColorChange(color.name)}
-                className={`w-5 h-5 rounded-full ${
+                className={`w-4 h-4 rounded-full ${
                   activeColor === color.name
-                    ? "ring-2 ring-offset-2 ring-foreground/50 ring-offset-background"
+                    ? "ring-2 ring-offset-2 ring-foreground/40 ring-offset-background"
                     : ""
                 }`}
                 style={{ backgroundColor: isDark ? color.dark : color.light }}
@@ -82,21 +93,14 @@ export function Navigation() {
               />
             ))}
           </div>
-        </div>
 
-        <div className="flex items-center gap-8">
-          <Link href="/" className="text-foreground hover:text-foreground/80 text-sm">
-            Home
-          </Link>
-          <Link href="/projects" className="text-foreground/70 hover:text-foreground text-sm">
-            Projects
-          </Link>
-          <Link href="/research" className="text-foreground/70 hover:text-foreground text-sm">
-            Research
-          </Link>
-          <Link href="/hobbies" className="text-foreground/70 hover:text-foreground text-sm">
-            Hobbies
-          </Link>
+          <button
+            onClick={handleThemeToggle}
+            className="p-2 rounded-full border border-border hover:bg-muted"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="w-4 h-4 text-foreground" /> : <Moon className="w-4 h-4 text-foreground" />}
+          </button>
         </div>
       </div>
     </nav>
