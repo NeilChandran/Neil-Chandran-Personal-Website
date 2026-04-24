@@ -2,13 +2,18 @@ import { Navigation } from "@/components/navigation"
 
 const hobbies = [
   {
-    title: "Tennis",
-    timeline: "2015 - Present",
-    description: "4 Years Varsity, Served as Captain",
-  },
-  {
     title: "Spanish Classical Guitar",
     timeline: "2014 - Present",
+    description: "",
+  },
+  {
+    title: "Tennis",
+    timeline: "2015 - Present",
+    description: "3 Years Varsity, Captain",
+  },
+  {
+    title: "Pickleball",
+    timeline: "2024 - Present",
     description: "",
   },
   {
@@ -19,11 +24,6 @@ const hobbies = [
   {
     title: "Pool",
     timeline: "2026 - Present",
-    description: "",
-  },
-  {
-    title: "Pickleball",
-    timeline: "2024 - Present",
     description: "",
   },
 ]
