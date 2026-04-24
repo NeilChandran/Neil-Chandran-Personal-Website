@@ -86,7 +86,7 @@ export default function ProjectsPage() {
                   <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
                   <div className="flex flex-wrap gap-x-2 mt-1">
                     {project.tags.map((tag, idx) => (
-                      <span key={tag} className="text-xs font-semibold" style={{ color: "var(--link-color)" }}>
+                      <span key={tag} className="text-xs font-semibold text-red-500">
                         {tag}{idx < project.tags.length - 1 && " •"}
                       </span>
                     ))}

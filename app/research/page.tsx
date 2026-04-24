@@ -51,7 +51,7 @@ export default function ResearchPage() {
                   <p className="text-sm text-muted-foreground mt-0.5">{item.description}</p>
                   <div className="flex flex-wrap gap-x-2 mt-1">
                     {item.tags.map((tag, idx) => (
-                      <span key={tag} className="text-xs font-semibold" style={{ color: "var(--link-color)" }}>
+                      <span key={tag} className="text-xs font-semibold text-red-500">
                         {tag}{idx < item.tags.length - 1 && " •"}
                       </span>
                     ))}
