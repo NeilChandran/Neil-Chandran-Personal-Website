@@ -8,7 +8,7 @@ export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
-  const linkClass = "font-semibold no-underline hover:underline hover:decoration-wavy hover:decoration-red-500 hover:underline-offset-4"
+  const linkClass = "font-semibold no-underline text-amber-800 hover:underline hover:decoration-wavy hover:decoration-red-500 hover:underline-offset-4"
 
   return (
     <div className="space-y-8 pb-32 max-w-2xl">
