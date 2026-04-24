@@ -1,11 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Libre_Baskerville } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
+const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
+const libreBaskerville = Libre_Baskerville({ 
+  subsets: ["latin"], 
+  weight: ["400", "700"],
+  variable: "--font-serif"
+})
 
 export const metadata: Metadata = {
   title: "Neil Chandran - Stanford Student",
@@ -43,7 +48,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`font-sans antialiased`}>
+      <body className={`${libreBaskerville.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

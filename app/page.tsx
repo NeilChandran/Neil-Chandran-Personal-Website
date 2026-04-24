@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-2xl mx-auto px-6 py-8">
         <HomeContent />
       </main>
       <VisitorCounter />
