@@ -188,6 +188,11 @@ export function HomeContent() {
           <Github className="w-5 h-5" />
         </a>
       </div>
+
+      <footer className="pt-12 text-sm text-muted-foreground font-mono">
+        &copy; 2026 Neil Chandran.<br />
+        All rights reserved.
+      </footer>
     </div>
   )
 }
