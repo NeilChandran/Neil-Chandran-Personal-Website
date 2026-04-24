@@ -8,7 +8,7 @@ export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
   const [isFellowshipsExpanded, setIsFellowshipsExpanded] = useState(false)
 
-  const linkClass = "text-foreground underline decoration-foreground/30 underline-offset-2 hover:decoration-wavy hover:decoration-red-500"
+  const linkClass = "font-medium text-foreground border-b border-dashed border-foreground/40 hover:border-solid hover:border-red-500 pb-[1px]"
 
   return (
     <div className="space-y-8 pb-32 max-w-2xl">
