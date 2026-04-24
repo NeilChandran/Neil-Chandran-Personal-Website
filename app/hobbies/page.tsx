@@ -19,7 +19,7 @@ const hobbies = [
   {
     title: "Poker",
     timeline: "2025 - Present",
-    description: "Under +200",
+    description: "+$200",
   },
   {
     title: "Pool",
