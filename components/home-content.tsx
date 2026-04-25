@@ -34,7 +34,11 @@ export function HomeContent() {
         <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           Perplexity
         </a>
-        .
+        . This spring I was at{" "}
+        <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          Jane Street
+        </a>
+        {" "}learning about trading and technology models.
       </p>
 
       <p className="text-lg leading-relaxed">
@@ -127,6 +131,10 @@ export function HomeContent() {
             <p className="text-base leading-relaxed text-foreground/80">
               <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
                 Z Fellow
+              </a>
+              ,{" "}
+              <a href="https://www.janestreet.com/join-jane-street/programs-and-events/fttp/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+                Jane Street FTTP
               </a>
               , Grata Scholar, Hoover Student Fellow
             </p>
