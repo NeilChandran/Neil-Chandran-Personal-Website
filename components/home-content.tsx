@@ -30,9 +30,9 @@ export function HomeContent() {
           className="inline-block align-middle select-none blur-sm text-foreground/70"
           aria-hidden="true"
         >something</span>{" "}
-        and helping with growth for{" "}
-        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Perplexity
+        and doing multimodal research at{" "}
+        <a href="https://ai.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          SAIL
         </a>
         .
       </p>
@@ -54,7 +54,11 @@ export function HomeContent() {
         <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           Afore Capital
         </a>{" "}
-        ($500M AUM), and worked with the{" "}
+        ($500M AUM), helped with GTM and growth for{" "}
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          Perplexity
+        </a>
+        , and worked with the{" "}
         <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           United Nations
         </a>{" "}
