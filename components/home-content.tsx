@@ -30,11 +30,19 @@ export function HomeContent() {
           className="inline-block align-middle select-none blur-sm text-foreground/70"
           aria-hidden="true"
         >something</span>{" "}
-        and helping with growth for{" "}
-        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Perplexity
+        and doing multimodal research at{" "}
+        <a href="https://ai.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          SAIL
         </a>
         .
+      </p>
+
+      <p className="text-lg leading-relaxed">
+        This spring I was at{" "}
+        <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          Jane Street
+        </a>
+        {" "}learning about trading and technology models.
       </p>
 
       <p className="text-lg leading-relaxed">
@@ -46,7 +54,11 @@ export function HomeContent() {
         <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           Afore Capital
         </a>{" "}
-        ($500M AUM), and worked with the{" "}
+        ($500M AUM), helped with GTM and growth for{" "}
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+          Perplexity
+        </a>
+        , and worked with the{" "}
         <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           United Nations
         </a>{" "}
@@ -127,6 +139,10 @@ export function HomeContent() {
             <p className="text-base leading-relaxed text-foreground/80">
               <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
                 Z Fellow
+              </a>
+              ,{" "}
+              <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+                Jane Street FTTP
               </a>
               , Grata Scholar, Hoover Student Fellow
             </p>
