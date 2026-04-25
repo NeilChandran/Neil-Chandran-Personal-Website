@@ -111,7 +111,7 @@ export function HomeContent() {
                 USA Computing Olympiad Gold
               </a>
               , U.S. President&apos;s Lifetime Achievement Award (White House Issued), MIT Solve Global Challenge
-              Finalist (1%), U.S. Presidential Scholar Semifinalist, Hershey&apos;s Grant Recipient
+              Finalist, U.S. Presidential Scholar Finalist, Hershey Grant Recipient
             </p>
           </div>
         )}
