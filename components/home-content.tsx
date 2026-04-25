@@ -110,8 +110,7 @@ export function HomeContent() {
               <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
                 USA Computing Olympiad Gold
               </a>
-              , U.S. President&apos;s Lifetime Achievement Award, MIT Solve Global Challenge
-              Finalist, U.S. Presidential Scholar Finalist, Hershey Grant Recipient
+              , U.S. Presidential Lifetime Achievement Award, MIT Solve Finalist, U.S. Presidential Scholar Finalist, Hershey Grant Recipient
             </p>
           </div>
         )}
