@@ -133,7 +133,7 @@ export function HomeContent() {
                 Z Fellow
               </a>
               ,{" "}
-              <a href="https://www.janestreet.com/join-jane-street/programs-and-events/fttp/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+              <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
                 Jane Street FTTP
               </a>
               , Grata Scholar, Hoover Student Fellow
