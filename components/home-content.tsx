@@ -38,14 +38,6 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        This spring I was at{" "}
-        <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Jane Street
-        </a>
-        {" "}learning about trading and technology models.
-      </p>
-
-      <p className="text-lg leading-relaxed">
         Before, I was the youngest intern at{" "}
         <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           YouGov
@@ -139,10 +131,6 @@ export function HomeContent() {
             <p className="text-base leading-relaxed text-foreground/80">
               <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
                 Z Fellow
-              </a>
-              ,{" "}
-              <a href="https://www.janestreet.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-                Jane Street FTTP
               </a>
               , Grata Scholar, Hoover Student Fellow
             </p>
