@@ -58,7 +58,7 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        I have done AI, government, policy, and tech research at{" "}
+        I have done AI, government, policy, and tech research at the{" "}
         <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
           Hoover Institution
         </a>
