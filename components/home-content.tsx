@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
+import { OrgLink } from "@/components/org-link"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
@@ -18,9 +19,7 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         I study <strong>Computer Science</strong> and <strong>Mathematics</strong> at{" "}
-        <a href="https://www.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Stanford
-        </a>
+        <OrgLink href="https://www.stanford.edu/" label="Stanford" />
         .
       </p>
 
@@ -31,53 +30,38 @@ export function HomeContent() {
           aria-hidden="true"
         >something</span>{" "}
         and doing multimodal research at{" "}
-        <a href="https://ai.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          SAIL
-        </a>
+        <OrgLink href="https://ai.stanford.edu/" label="SAIL" />
         .
       </p>
 
       <p className="text-lg leading-relaxed">
         Before, I was the youngest intern at{" "}
-        <a href="https://yougov.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          YouGov
-        </a>
+        <OrgLink href="https://yougov.com/" label="YouGov" />
         , scouted for{" "}
-        <a href="https://afore.vc/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Afore Capital
-        </a>{" "}
+        <OrgLink href="https://afore.vc/" label="Afore Capital" />{" "}
         ($500M AUM), helped with GTM and growth for{" "}
-        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+        <a href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Perplexity
         </a>
         , and worked with the{" "}
-        <a href="https://www.un.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          United Nations
-        </a>{" "}
+        <OrgLink href="https://www.un.org/" label="United Nations" />{" "}
         as a Youth Advisor.
       </p>
 
       <p className="text-lg leading-relaxed">
         I have done AI, government, policy, and tech research at the{" "}
-        <a href="https://www.hoover.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Hoover Institution
-        </a>
+        <OrgLink href="https://www.hoover.org/" label="Hoover Institution" />
         ,{" "}
-        <a href="https://hsph.harvard.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Harvard T.H. Chan School of Public Health
-        </a>
+        <OrgLink
+          href="https://hsph.harvard.edu/"
+          label="Harvard T.H. Chan School of Public Health"
+        />
         ,{" "}
-        <a href="https://www.ucsc.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          UC Santa Cruz
-        </a>
+        <OrgLink href="https://www.ucsc.edu/" label="UC Santa Cruz" />
         , and{" "}
-        <a href="https://fsi.stanford.edu/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Stanford FSI
-        </a>{" "}
+        <OrgLink href="https://fsi.stanford.edu/" label="Stanford FSI" />{" "}
         in partnership with{" "}
-        <a href="https://about.meta.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
-          Meta
-        </a>
+        <OrgLink href="https://about.meta.com/" label="Meta" />
         .
       </p>
 
@@ -98,16 +82,15 @@ export function HomeContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={linkClass}
-                
               >
                 Coca-Cola Scholar
               </a>
               ,{" "}
-              <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+              <a href="https://treehacks.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 TreeHacks 1st Place: Sustainability Track
               </a>
               ,{" "}
-              <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+              <a href="http://www.usaco.org/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 USA Computing Olympiad Gold
               </a>
               , U.S. Presidential Lifetime Achievement Award, MIT Solve Finalist, U.S. Presidential Scholar Finalist, Hershey Grant Recipient
@@ -128,7 +111,7 @@ export function HomeContent() {
         {isFellowshipsExpanded && (
           <div className="mt-3 pl-4 border-l-2 border-border">
             <p className="text-base leading-relaxed text-foreground/80">
-              <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass} >
+              <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 Z Fellow
               </a>
               , Grata Scholar, Hoover Student Fellow
@@ -139,22 +122,22 @@ export function HomeContent() {
 
       <p className="text-lg leading-relaxed">
         Reach out:{" "}
-        <a href="mailto:neilchandran@stanford.edu" className={linkClass} >
+        <a href="mailto:neilchandran@stanford.edu" className={linkClass}>
           neilchandran@stanford.edu
         </a>
         .
       </p>
 
       <div className="flex items-center gap-4 text-base pt-4">
-        <Link href="/projects" className={linkClass} >
+        <Link href="/projects" className={linkClass}>
           Projects
         </Link>
         <span className="text-foreground/30">|</span>
-        <Link href="/research" className={linkClass} >
+        <Link href="/research" className={linkClass}>
           Research
         </Link>
         <span className="text-foreground/30">|</span>
-        <Link href="/hobbies" className={linkClass} >
+        <Link href="/hobbies" className={linkClass}>
           Hobbies
         </Link>
       </div>

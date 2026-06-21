@@ -32,16 +32,16 @@ export default function RootLayout({
               (function() {
                 try {
                   const theme = localStorage.getItem('theme');
-                  if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
+                  if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
+                  } else {
+                    document.documentElement.classList.add('dark');
                     if (!theme) {
-                      localStorage.setItem('theme', 'light');
+                      localStorage.setItem('theme', 'dark');
                     }
                   }
                 } catch (e) {
-                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('dark');
                 }
               })();
             `,
