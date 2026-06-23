@@ -114,7 +114,7 @@ export function HomeContent() {
               <a href="https://www.zfellows.com/" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 Z Fellow
               </a>
-              , Grata Scholar, Hoover Student Fellow
+              , Slavin Fellow, Grata Scholar, Hoover Student Fellow
             </p>
           </div>
         )}
