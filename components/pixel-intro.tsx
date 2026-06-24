@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Pinyon_Script } from "next/font/google"
+import { Allura } from "next/font/google"
 
-const signatureFont = Pinyon_Script({ weight: "400", subsets: ["latin"] })
+const signatureFont = Allura({ weight: "400", subsets: ["latin"] })
 
 const SESSION_KEY = "pixel-intro-seen"
 
@@ -12,7 +12,7 @@ const NOVA = {
   cream: "#e6e2d4",
 } as const
 
-const TOTAL_MS = 4600
+const TOTAL_MS = 4200
 const FADE_MS = 700
 
 export function PixelIntro() {
@@ -67,19 +67,16 @@ export function PixelIntro() {
       role="presentation"
     >
       <div
-        className={`signature-jefferson ${signatureFont.className} ${
-          ready ? "signature-jefferson--animate" : ""
+        className={`signature-block ${signatureFont.className} ${
+          ready ? "signature-block--animate" : ""
         }`}
         style={{ color: NOVA.cream }}
       >
-        <span className="signature-part signature-part--1" aria-hidden="true">
-          <span className="sig-cap">N</span>
-          <span className="sig-body">eil</span>
+        <span className="signature-word signature-word--1" aria-hidden="true">
+          Neil
         </span>
-
-        <span className="signature-part signature-part--2" aria-hidden="true">
-          <span className="sig-cap sig-cap--c">C</span>
-          <span className="sig-body sig-body--long">handran</span>
+        <span className="signature-word signature-word--2" aria-hidden="true">
+          Chandran
         </span>
 
         <svg

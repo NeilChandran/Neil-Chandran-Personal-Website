@@ -149,70 +149,44 @@
   animation: intro-cursive-in 1.35s cubic-bezier(0.33, 0, 0.667, 1) forwards;
 }
 
-.signature-jefferson {
+.signature-block {
   position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  width: min(92vw, 720px);
-  height: clamp(84px, 16vw, 132px);
-  padding: 0 0.5rem 0.35rem;
-  font-size: clamp(4.75rem, 13.5vw, 7.25rem);
-  line-height: 0.68;
-  letter-spacing: -0.03em;
-  transform: rotate(-3deg) skewX(-14deg);
+  width: min(92vw, 700px);
+  height: clamp(88px, 17vw, 128px);
+  padding: 0 0.25rem 0.4rem;
+  font-size: clamp(4.5rem, 12.5vw, 6.75rem);
+  line-height: 0.78;
+  letter-spacing: 0.01em;
+  transform: rotate(-2.5deg) skewX(-11deg);
   transform-origin: center bottom;
-  filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.1));
+  filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.12));
 }
 
-.signature-part {
-  display: inline-flex;
-  align-items: flex-end;
+.signature-word {
+  display: inline-block;
   white-space: nowrap;
   opacity: 0;
   clip-path: inset(0 100% 0 0);
   transform-origin: left bottom;
 }
 
-.signature-part--1 {
-  margin-right: 0.42em;
+.signature-word--1 {
+  margin-right: 0.28em;
+  letter-spacing: 0.02em;
 }
 
-.signature-part--2 {
-  margin-left: -0.04em;
-}
-
-.sig-cap {
-  display: inline-block;
-  font-size: 1em;
-  line-height: 0.72;
-  transform: translateY(0.04em);
-}
-
-.sig-cap--c {
-  margin-right: -0.06em;
-}
-
-.sig-body {
-  display: inline-block;
-  font-size: 0.26em;
-  line-height: 1;
-  letter-spacing: -0.12em;
-  margin-left: -0.22em;
-  margin-bottom: 0.34em;
-  transform: scaleX(0.92) translateY(0.05em);
-}
-
-.sig-body--long {
-  letter-spacing: -0.09em;
-  margin-left: -0.18em;
+.signature-word--2 {
+  letter-spacing: 0.015em;
 }
 
 .signature-tail {
   position: absolute;
-  left: 58%;
-  bottom: 0.05em;
-  width: 42%;
+  left: 54%;
+  bottom: 0.08em;
+  width: 44%;
   height: 14px;
   overflow: visible;
   opacity: 0;
@@ -225,14 +199,14 @@
   vector-effect: non-scaling-stroke;
 }
 
-@keyframes jefferson-part-stroke {
+@keyframes signature-word-draw {
   0% {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
-    transform: translateX(-6px) translateY(6px);
+    transform: translateX(-4px) translateY(5px);
   }
-  12% {
-    opacity: 0.95;
+  15% {
+    opacity: 1;
   }
   100% {
     opacity: 1;
@@ -241,11 +215,11 @@
   }
 }
 
-@keyframes jefferson-tail-stroke {
+@keyframes signature-tail-draw {
   0% {
     opacity: 0;
   }
-  8% {
+  10% {
     opacity: 1;
   }
   100% {
@@ -254,28 +228,28 @@
   }
 }
 
-.signature-jefferson--animate .signature-part--1 {
-  animation: jefferson-part-stroke 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s forwards;
+.signature-block--animate .signature-word--1 {
+  animation: signature-word-draw 1s cubic-bezier(0.28, 0.42, 0.32, 1) 0.1s forwards;
 }
 
-.signature-jefferson--animate .signature-part--2 {
-  animation: jefferson-part-stroke 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.92s forwards;
+.signature-block--animate .signature-word--2 {
+  animation: signature-word-draw 1.25s cubic-bezier(0.28, 0.42, 0.32, 1) 0.95s forwards;
 }
 
-.signature-jefferson--animate .signature-tail {
-  animation: jefferson-tail-stroke 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.05s forwards;
+.signature-block--animate .signature-tail {
+  animation: signature-tail-draw 0.8s cubic-bezier(0.28, 0.42, 0.32, 1) 1.95s forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .signature-jefferson--animate .signature-part,
-  .signature-jefferson--animate .signature-tail {
+  .signature-block--animate .signature-word,
+  .signature-block--animate .signature-tail {
     animation: none;
     opacity: 1;
     clip-path: none;
     transform: none;
   }
 
-  .signature-jefferson--animate .signature-tail path {
+  .signature-block--animate .signature-tail path {
     stroke-dashoffset: 0;
   }
 }
