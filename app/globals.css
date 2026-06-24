@@ -152,25 +152,27 @@
 .signature-block {
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: min(92vw, 700px);
-  height: clamp(88px, 17vw, 128px);
-  padding: 0 0.25rem 0.4rem;
+  min-height: clamp(110px, 20vw, 160px);
+  padding: 0.45em 0.25rem 0.25rem;
+  overflow: visible;
   font-size: clamp(4.5rem, 12.5vw, 6.75rem);
-  line-height: 0.78;
+  line-height: 1.15;
   letter-spacing: 0.01em;
   transform: rotate(-2.5deg) skewX(-11deg);
-  transform-origin: center bottom;
+  transform-origin: center center;
   filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.12));
 }
 
 .signature-word {
   display: inline-block;
   white-space: nowrap;
+  overflow: visible;
   opacity: 0;
   clip-path: inset(0 100% 0 0);
-  transform-origin: left bottom;
+  transform-origin: left center;
 }
 
 .signature-word--1 {
@@ -180,23 +182,6 @@
 
 .signature-word--2 {
   letter-spacing: 0.015em;
-}
-
-.signature-tail {
-  position: absolute;
-  left: 54%;
-  bottom: 0.08em;
-  width: 44%;
-  height: 14px;
-  overflow: visible;
-  opacity: 0;
-  color: inherit;
-}
-
-.signature-tail path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  vector-effect: non-scaling-stroke;
 }
 
 @keyframes signature-word-draw {
@@ -215,19 +200,6 @@
   }
 }
 
-@keyframes signature-tail-draw {
-  0% {
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
-}
-
 .signature-block--animate .signature-word--1 {
   animation: signature-word-draw 1s cubic-bezier(0.28, 0.42, 0.32, 1) 0.1s forwards;
 }
@@ -236,20 +208,11 @@
   animation: signature-word-draw 1.25s cubic-bezier(0.28, 0.42, 0.32, 1) 0.95s forwards;
 }
 
-.signature-block--animate .signature-tail {
-  animation: signature-tail-draw 0.8s cubic-bezier(0.28, 0.42, 0.32, 1) 1.95s forwards;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .signature-block--animate .signature-word,
-  .signature-block--animate .signature-tail {
+  .signature-block--animate .signature-word {
     animation: none;
     opacity: 1;
     clip-path: none;
     transform: none;
-  }
-
-  .signature-block--animate .signature-tail path {
-    stroke-dashoffset: 0;
   }
 }

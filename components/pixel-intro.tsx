@@ -12,7 +12,7 @@ const NOVA = {
   cream: "#e6e2d4",
 } as const
 
-const TOTAL_MS = 4200
+const TOTAL_MS = 3400
 const FADE_MS = 700
 
 export function PixelIntro() {
@@ -78,22 +78,6 @@ export function PixelIntro() {
         <span className="signature-word signature-word--2" aria-hidden="true">
           Chandran
         </span>
-
-        <svg
-          className="signature-tail"
-          viewBox="0 0 240 16"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M0 10 C40 8, 80 6, 130 7 S210 9, 240 8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            pathLength={1}
-          />
-        </svg>
 
         <span className="sr-only">Neil Chandran</span>
       </div>
