@@ -104,7 +104,7 @@ export function HomeContent() {
           onClick={() => setIsFellowshipsExpanded(!isFellowshipsExpanded)}
           className="flex items-center gap-2 text-lg font-semibold"
         >
-          Technical Fellowships
+          Fellowships
           {isFellowshipsExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </button>
 
