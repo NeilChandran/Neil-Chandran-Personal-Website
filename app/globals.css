@@ -149,115 +149,133 @@
   animation: intro-cursive-in 1.35s cubic-bezier(0.33, 0, 0.667, 1) forwards;
 }
 
-.signature-block {
+.signature-jefferson {
   position: relative;
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
-  gap: 0.05em;
-  padding: 0.1em 0.35em 0.55em;
-  font-size: clamp(3.75rem, 17vw, 6.75rem);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  transform: rotate(-4deg) translateY(6px);
-  filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.08));
+  width: min(92vw, 720px);
+  height: clamp(84px, 16vw, 132px);
+  padding: 0 0.5rem 0.35rem;
+  font-size: clamp(4.75rem, 13.5vw, 7.25rem);
+  line-height: 0.68;
+  letter-spacing: -0.03em;
+  transform: rotate(-3deg) skewX(-14deg);
+  transform-origin: center bottom;
+  filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.1));
 }
 
-.signature-word {
-  display: inline-block;
+.signature-part {
+  display: inline-flex;
+  align-items: flex-end;
+  white-space: nowrap;
   opacity: 0;
-  transform-origin: left bottom;
   clip-path: inset(0 100% 0 0);
-  text-shadow:
-    0.5px 0.5px 0 rgba(230, 226, 212, 0.35),
-    -0.5px 0 rgba(230, 226, 212, 0.12);
+  transform-origin: left bottom;
 }
 
-.signature-word--1 {
-  --sig-rotate: -7deg;
-  --sig-skew: -6deg;
-  --sig-rise: 10px;
-  margin-right: -0.08em;
+.signature-part--1 {
+  margin-right: 0.42em;
 }
 
-.signature-word--2 {
-  --sig-rotate: 5deg;
-  --sig-skew: 4deg;
-  --sig-rise: 14px;
-  margin-left: -0.12em;
-  margin-top: 0.08em;
+.signature-part--2 {
+  margin-left: -0.04em;
 }
 
-.signature-flourish {
+.sig-cap {
+  display: inline-block;
+  font-size: 1em;
+  line-height: 0.72;
+  transform: translateY(0.04em);
+}
+
+.sig-cap--c {
+  margin-right: -0.06em;
+}
+
+.sig-body {
+  display: inline-block;
+  font-size: 0.26em;
+  line-height: 1;
+  letter-spacing: -0.12em;
+  margin-left: -0.22em;
+  margin-bottom: 0.34em;
+  transform: scaleX(0.92) translateY(0.05em);
+}
+
+.sig-body--long {
+  letter-spacing: -0.09em;
+  margin-left: -0.18em;
+}
+
+.signature-tail {
   position: absolute;
-  left: 8%;
-  right: 4%;
-  bottom: 0.08em;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(230, 226, 212, 0.15) 8%,
-    rgba(230, 226, 212, 0.72) 42%,
-    rgba(230, 226, 212, 0.45) 72%,
-    transparent 100%
-  );
-  transform: scaleX(0) rotate(-2deg);
-  transform-origin: left center;
+  left: 58%;
+  bottom: 0.05em;
+  width: 42%;
+  height: 14px;
+  overflow: visible;
   opacity: 0;
+  color: inherit;
 }
 
-@keyframes signature-word-stroke {
+.signature-tail path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+@keyframes jefferson-part-stroke {
   0% {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
-    transform: translateY(var(--sig-rise)) rotate(var(--sig-rotate)) skewX(var(--sig-skew));
+    transform: translateX(-6px) translateY(6px);
   }
-  18% {
-    opacity: 0.92;
-  }
-  72% {
-    clip-path: inset(0 8% 0 0);
-    transform: translateY(2px) rotate(calc(var(--sig-rotate) * 0.45)) skewX(calc(var(--sig-skew) * 0.35));
+  12% {
+    opacity: 0.95;
   }
   100% {
     opacity: 1;
     clip-path: inset(0 0 0 0);
-    transform: translateY(-1px) rotate(calc(var(--sig-rotate) * 0.25)) skewX(calc(var(--sig-skew) * 0.15));
+    transform: translateX(0) translateY(0);
   }
 }
 
-@keyframes signature-flourish-draw {
+@keyframes jefferson-tail-stroke {
   0% {
     opacity: 0;
-    transform: scaleX(0) rotate(-2deg);
+  }
+  8% {
+    opacity: 1;
   }
   100% {
     opacity: 1;
-    transform: scaleX(1) rotate(-1deg);
+    stroke-dashoffset: 0;
   }
 }
 
-.signature-block--animate .signature-word--1 {
-  animation: signature-word-stroke 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) 0.12s forwards;
+.signature-jefferson--animate .signature-part--1 {
+  animation: jefferson-part-stroke 0.95s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s forwards;
 }
 
-.signature-block--animate .signature-word--2 {
-  animation: signature-word-stroke 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.95s forwards;
+.signature-jefferson--animate .signature-part--2 {
+  animation: jefferson-part-stroke 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.92s forwards;
 }
 
-.signature-block--animate .signature-flourish {
-  animation: signature-flourish-draw 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) 2.05s forwards;
+.signature-jefferson--animate .signature-tail {
+  animation: jefferson-tail-stroke 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.05s forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .signature-block--animate .signature-word,
-  .signature-block--animate .signature-flourish {
+  .signature-jefferson--animate .signature-part,
+  .signature-jefferson--animate .signature-tail {
     animation: none;
     opacity: 1;
     clip-path: none;
     transform: none;
+  }
+
+  .signature-jefferson--animate .signature-tail path {
+    stroke-dashoffset: 0;
   }
 }

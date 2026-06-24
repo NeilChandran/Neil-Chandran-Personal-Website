@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Great_Vibes } from "next/font/google"
+import { Pinyon_Script } from "next/font/google"
 
-const cursive = Great_Vibes({ weight: "400", subsets: ["latin"] })
+const signatureFont = Pinyon_Script({ weight: "400", subsets: ["latin"] })
 
 const SESSION_KEY = "pixel-intro-seen"
 
@@ -12,9 +12,7 @@ const NOVA = {
   cream: "#e6e2d4",
 } as const
 
-const SIGNATURE_WORDS = ["Neil", "Chandran"] as const
-
-const TOTAL_MS = 4200
+const TOTAL_MS = 4600
 const FADE_MS = 700
 
 export function PixelIntro() {
@@ -69,18 +67,38 @@ export function PixelIntro() {
       role="presentation"
     >
       <div
-        className={`signature-block ${cursive.className} ${ready ? "signature-block--animate" : ""}`}
+        className={`signature-jefferson ${signatureFont.className} ${
+          ready ? "signature-jefferson--animate" : ""
+        }`}
         style={{ color: NOVA.cream }}
       >
-        {SIGNATURE_WORDS.map((word, index) => (
-          <span
-            key={word}
-            className={`signature-word signature-word--${index + 1}`}
-          >
-            {word}
-          </span>
-        ))}
-        <span className="signature-flourish" aria-hidden="true" />
+        <span className="signature-part signature-part--1" aria-hidden="true">
+          <span className="sig-cap">N</span>
+          <span className="sig-body">eil</span>
+        </span>
+
+        <span className="signature-part signature-part--2" aria-hidden="true">
+          <span className="sig-cap sig-cap--c">C</span>
+          <span className="sig-body sig-body--long">handran</span>
+        </span>
+
+        <svg
+          className="signature-tail"
+          viewBox="0 0 240 16"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M0 10 C40 8, 80 6, 130 7 S210 9, 240 8"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            pathLength={1}
+          />
+        </svg>
+
+        <span className="sr-only">Neil Chandran</span>
       </div>
     </div>
   )
