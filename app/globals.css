@@ -148,3 +148,116 @@
 .intro-cursive--animate {
   animation: intro-cursive-in 1.35s cubic-bezier(0.33, 0, 0.667, 1) forwards;
 }
+
+.signature-block {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.05em;
+  padding: 0.1em 0.35em 0.55em;
+  font-size: clamp(3.75rem, 17vw, 6.75rem);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  transform: rotate(-4deg) translateY(6px);
+  filter: drop-shadow(0 1px 0 rgba(230, 226, 212, 0.08));
+}
+
+.signature-word {
+  display: inline-block;
+  opacity: 0;
+  transform-origin: left bottom;
+  clip-path: inset(0 100% 0 0);
+  text-shadow:
+    0.5px 0.5px 0 rgba(230, 226, 212, 0.35),
+    -0.5px 0 rgba(230, 226, 212, 0.12);
+}
+
+.signature-word--1 {
+  --sig-rotate: -7deg;
+  --sig-skew: -6deg;
+  --sig-rise: 10px;
+  margin-right: -0.08em;
+}
+
+.signature-word--2 {
+  --sig-rotate: 5deg;
+  --sig-skew: 4deg;
+  --sig-rise: 14px;
+  margin-left: -0.12em;
+  margin-top: 0.08em;
+}
+
+.signature-flourish {
+  position: absolute;
+  left: 8%;
+  right: 4%;
+  bottom: 0.08em;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(230, 226, 212, 0.15) 8%,
+    rgba(230, 226, 212, 0.72) 42%,
+    rgba(230, 226, 212, 0.45) 72%,
+    transparent 100%
+  );
+  transform: scaleX(0) rotate(-2deg);
+  transform-origin: left center;
+  opacity: 0;
+}
+
+@keyframes signature-word-stroke {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translateY(var(--sig-rise)) rotate(var(--sig-rotate)) skewX(var(--sig-skew));
+  }
+  18% {
+    opacity: 0.92;
+  }
+  72% {
+    clip-path: inset(0 8% 0 0);
+    transform: translateY(2px) rotate(calc(var(--sig-rotate) * 0.45)) skewX(calc(var(--sig-skew) * 0.35));
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(-1px) rotate(calc(var(--sig-rotate) * 0.25)) skewX(calc(var(--sig-skew) * 0.15));
+  }
+}
+
+@keyframes signature-flourish-draw {
+  0% {
+    opacity: 0;
+    transform: scaleX(0) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1) rotate(-1deg);
+  }
+}
+
+.signature-block--animate .signature-word--1 {
+  animation: signature-word-stroke 1.05s cubic-bezier(0.22, 0.61, 0.36, 1) 0.12s forwards;
+}
+
+.signature-block--animate .signature-word--2 {
+  animation: signature-word-stroke 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 0.95s forwards;
+}
+
+.signature-block--animate .signature-flourish {
+  animation: signature-flourish-draw 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) 2.05s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signature-block--animate .signature-word,
+  .signature-block--animate .signature-flourish {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+  }
+}

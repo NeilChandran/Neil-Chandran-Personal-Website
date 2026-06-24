@@ -12,7 +12,9 @@ const NOVA = {
   cream: "#e6e2d4",
 } as const
 
-const TOTAL_MS = 2600
+const SIGNATURE_WORDS = ["Neil", "Chandran"] as const
+
+const TOTAL_MS = 4200
 const FADE_MS = 700
 
 export function PixelIntro() {
@@ -66,12 +68,20 @@ export function PixelIntro() {
       aria-hidden={phase === "fading"}
       role="presentation"
     >
-      <span
-        className={`${cursive.className} intro-cursive ${ready ? "intro-cursive--animate" : ""}`}
+      <div
+        className={`signature-block ${cursive.className} ${ready ? "signature-block--animate" : ""}`}
         style={{ color: NOVA.cream }}
       >
-        Neil
-      </span>
+        {SIGNATURE_WORDS.map((word, index) => (
+          <span
+            key={word}
+            className={`signature-word signature-word--${index + 1}`}
+          >
+            {word}
+          </span>
+        ))}
+        <span className="signature-flourish" aria-hidden="true" />
+      </div>
     </div>
   )
 }
