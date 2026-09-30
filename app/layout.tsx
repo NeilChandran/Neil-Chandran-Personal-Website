@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Neil Chandran - Stanford Student",
   description: "Personal website of Neil Chandran, Stanford Class of 2029",
   generator: "v0.app",
+  other: {
+    "facebook-domain-verification": "7hzxe2dyuz5fpzm4qqtgyf21r9cwcv",
+  },
 }
 
 export default function RootLayout({
