@@ -33,6 +33,15 @@ export function HedwigFlyover() {
     if (!flying) return
     const box = boxRef.current
     if (!box || typeof box.animate !== "function") {
+      // The boot script may have painted Gotham already — fall back to the
+      // stored theme if the flight can't run.
+      const htmlEl = document.documentElement
+      htmlEl.classList.remove("hedwig-night")
+      try {
+        if (localStorage.getItem("theme") === "light") htmlEl.classList.remove("dark")
+      } catch {
+        // Keep dark as the default.
+      }
       setFlying(false)
       return
     }

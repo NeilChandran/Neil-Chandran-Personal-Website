@@ -31,7 +31,19 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  const theme = localStorage.getItem('theme');
+                  // If the owl flyover is about to play (first open this
+                  // session), paint the Gotham night from the very first
+                  // frame instead of the normal theme.
+                  var flightPending = false;
+                  try {
+                    flightPending = sessionStorage.getItem('hedwig-owl-flown') !== '1' &&
+                      !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+                  } catch (e) {}
+                  if (flightPending) {
+                    document.documentElement.classList.add('dark', 'hedwig-night');
+                    return;
+                  }
+                  var theme = localStorage.getItem('theme');
                   if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
                   } else {
