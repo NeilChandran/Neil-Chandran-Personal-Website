@@ -4,6 +4,7 @@ import { useState } from "react"
 import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
 import { OrgLink } from "@/components/org-link"
+import { HedwigMark } from "@/components/hedwig-mark"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
@@ -24,11 +25,15 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        Currently building{" "}
-        <span
-          className="inline-block align-middle select-none blur-sm text-foreground/70"
-          aria-hidden="true"
-        >something</span>{" "}
+        Currently building <HedwigMark />{" "}
+        <a
+          href="https://hedwig-ai.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClass}
+        >
+          Hedwig
+        </a>{" "}
         and doing multimodal research at{" "}
         <OrgLink href="https://ai.stanford.edu/" label="SAIL" />
         .

@@ -15,6 +15,13 @@ export function Navigation() {
     setMounted(true)
     const htmlElement = document.documentElement
     setIsDark(htmlElement.classList.contains("dark"))
+    // Stay in sync when something else flips the theme (e.g. the owl
+    // flyover turning night into day).
+    const observer = new MutationObserver(() => {
+      setIsDark(htmlElement.classList.contains("dark"))
+    })
+    observer.observe(htmlElement, { attributes: true, attributeFilter: ["class"] })
+    return () => observer.disconnect()
   }, [])
 
   const handleThemeToggle = () => {
