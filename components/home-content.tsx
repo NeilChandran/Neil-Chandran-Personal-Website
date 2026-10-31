@@ -5,6 +5,8 @@ import { ChevronUp, ChevronDown, Linkedin, Github } from "lucide-react"
 import Link from "next/link"
 import { OrgLink } from "@/components/org-link"
 import { HedwigMark } from "@/components/hedwig-mark"
+import { Hedwig3D } from "@/components/hedwig-3d"
+import { AgentBuddy } from "@/components/agent-buddy"
 
 export function HomeContent() {
   const [isAwardsExpanded, setIsAwardsExpanded] = useState(true)
@@ -13,8 +15,11 @@ export function HomeContent() {
   const linkClass = "font-medium text-foreground border-b border-dashed border-foreground/40 hover:border-solid hover:border-red-500 pb-[1px]"
 
   return (
-    <div className="space-y-8 pb-32 max-w-2xl">
-      <h1 className="text-4xl md:text-5xl font-serif font-bold tracking-tight">
+    <div className="relative space-y-8 pb-32 max-w-2xl">
+      <Hedwig3D className="absolute -top-12 hidden md:-right-16 md:block lg:-right-36" />
+
+      <h1 className="flex items-center gap-3 text-4xl md:text-5xl font-serif font-bold tracking-tight">
+        <AgentBuddy />
         Neil Chandran
       </h1>
 
@@ -25,14 +30,15 @@ export function HomeContent() {
       </p>
 
       <p className="text-lg leading-relaxed">
-        Currently building <HedwigMark />{" "}
+        Currently building{" "}
         <a
           href="https://hedwig-ai.com"
           target="_blank"
           rel="noopener noreferrer"
-          className={linkClass}
+          className="mx-[0.2em] inline-flex items-baseline gap-[0.4em] whitespace-nowrap"
         >
-          Hedwig
+          <HedwigMark />
+          <span className={`hedwig-wordmark ${linkClass}`}>Hedwig</span>
         </a>{" "}
         and doing multimodal research at{" "}
         <OrgLink href="https://ai.stanford.edu/" label="SAIL" />

@@ -1,17 +1,12 @@
 /**
- * The Hedwig owl, inline with the text — the small, perched companion to
- * the first-open flyover (see HedwigFlyover).
+ * The Hedwig brand mark, inline with the text — rendered from the official
+ * logo SVG in the current text color.
  */
 export function HedwigMark() {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/hedwig-owl.png"
-      alt=""
+    <span
       aria-hidden="true"
-      draggable={false}
-      data-hedwig-perch=""
-      className="inline-block h-[1.25em] w-auto align-[-0.2em] select-none invert dark:invert-0"
+      className="hedwig-mark inline-block h-[1em] w-[0.8em] select-none align-[-0.14em]"
     />
   )
 }
